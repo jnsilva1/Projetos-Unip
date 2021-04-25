@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Pacientes.COVID" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Pacientes" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Pacientes" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="Comorbidade.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Comorbidade.h" />
+		<Unit filename="DataHora.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="DataHora.h" />
+		<Unit filename="Endereco.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Endereco.h" />
+		<Unit filename="FileHelper.h" />
+		<Unit filename="OutrosTipos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="OutrosTipos.h" />
+		<Unit filename="Paciente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Paciente.h" />
+		<Unit filename="Pessoa.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Pessoa.h" />
+		<Unit filename="Usuario.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Usuario.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
