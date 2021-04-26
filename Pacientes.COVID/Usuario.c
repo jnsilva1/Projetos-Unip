@@ -1,30 +1,45 @@
 #include "Usuario.h"
 
+void ObtemNomeCompletoArquivoDeUsuarios(char * _destino){
+    _destino[0] = EMPTYCHAR;
+    strcat(_destino, DEFAULT_DIR);
+    strcat(_destino, "usuarios.unip");
+}
+
 Usuario AcessarSistema(char * login, char * senha){
-    AdicionaUsuarioPadrao();
     Usuario usuario;
     FILE * fptr;
+    bool ENCONTROU = false;
     char diretorioUsuarios[50];
+    ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
-    strcat(diretorioUsuarios, DEFAULT_DIR);
-    strcat(diretorioUsuarios, "usuarios.unip");
     //Abrindo arquivo para leitura e gravação em modo binário
     if((fptr = fopen(diretorioUsuarios, "ab+")) == NULL) return usuario;
 
     while(fread(&usuario, sizeof(Usuario), 1,fptr) == 1){
-        if(stricmp(login, usuario.Login) && stricmp(senha, usuario.Senha)){
+        //Se usuário atual possui os mesmos dados de acesso, saio do laço e retorno o usuário
+        if(strcmp(login, usuario.Login) == 0 && strcmp(senha, usuario.Senha) == 0){
+                ENCONTROU = true;
             break;
         }
     }
+    if(!ENCONTROU){
+        usuario.Id = 0;
+        usuario.Login[0] = EMPTYCHAR;
+        usuario.Nome[0] = EMPTYCHAR;
+        usuario.Senha[0] = EMPTYCHAR;
+    }
+    fclose(fptr);
     return usuario;
 }
 
-void ObtemSenha(char * _dest){
+
+void ObtemSenha(char * _dest, bool login){
     const int maxPasswordLength = 15;
     char password[maxPasswordLength+1],ch;
     int characterPosition = 0;
 
-    printf("Informe a senha. Tamanho 1-%d\n", maxPasswordLength);
+    printf(" Informe a senha: ", maxPasswordLength);
     while(1){
         ch = getch();
         if(ch == ENTER_CHAR){
@@ -43,7 +58,9 @@ void ObtemSenha(char * _dest){
                 characterPosition++;
                 printf("*");
             }else{
-                printf("\nSua senha excede a quantidade maxima de caractreses. Apenas os %d primeiros caracteres serão considerados!", maxPasswordLength);
+                if(!login){
+                    printf("\n\n Sua senha excede a quantidade maxima de caractreses. Apenas os %d primeiros caracteres serão considerados!", maxPasswordLength);
+                }
                 break;
             }
         }
@@ -51,10 +68,9 @@ void ObtemSenha(char * _dest){
     password[characterPosition] = EMPTYCHAR;
     printf("\n");
     if(strlen(password) == 0){
-        printf("Nenhuma senha informada.");
+        printf(" Nenhuma senha informada.");
     }
     strcpy(_dest, password);
-    free(password);
 }
 
 int TotalUsuariosCadastrados(){
@@ -62,30 +78,30 @@ int TotalUsuariosCadastrados(){
     char diretorioUsuarios[50];
     long numeroRegistros = 0;
 
-    strcat(diretorioUsuarios, DEFAULT_DIR);
-    strcat(diretorioUsuarios, "usuarios.unip");
+    ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
     if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return (int)numeroRegistros;
 
     fseek(fptr, 0, 2); //Indo para o final do arquivo
     //Calcula o numero de registros
     numeroRegistros = ftell(fptr)/sizeof(Usuario);
+    fclose(fptr);
     return (int)numeroRegistros;
 }
 
-void AdicionaUsuarioPadrao(){
+void AdicionarUsuarioPadrao(){
     if(TotalUsuariosCadastrados() == 0){
         Usuario user;
         user.Id = 1;
-        user.Login = "ADMIN";
-        user.Senha = "#UNIP.123";
-        user.Nome = "ADMINISTRADOR";
+        user.Nome[0] = EMPTYCHAR;
+        strcat(user.Login,"ADMIN");
+        strcat(user.Senha,"#UNIP.123");
+        strcat(user.Nome,"ADMINISTRADOR");
 
         FILE * fptr;
         char diretorioUsuarios[50];
+        ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
-        strcat(diretorioUsuarios, DEFAULT_DIR);
-        strcat(diretorioUsuarios, "usuarios.unip");
         //Abrindo arquivo para leitura e gravação em modo binário
         if((fptr = fopen(diretorioUsuarios, "ab+")) == NULL) return;
 
@@ -94,4 +110,116 @@ void AdicionaUsuarioPadrao(){
 
         fclose(fptr);
     }
+}
+
+ResultadoBuscaEmArquivo BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
+
+    FILE * fptr;
+    ResultadoBuscaEmArquivo res = {0, false};
+    char diretorioUsuarios[50];
+    ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
+
+    //Abrindo arquivo para leitura e gravação em modo binário
+    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return res;
+
+    while(fread(usuarioDestino, sizeof(Usuario), 1,fptr) == 1){
+        //Se usuário atual possui os mesmos dados de acesso, saio do laço e retorno o usuário
+        if(usuarioDestino->Id == Id){
+            res.EncontrouRegistro = true;
+            res.Posicao = ftell(fptr);
+            break;
+        }
+    }
+    fclose(fptr);
+    return res;
+}
+
+int ProximaSequenciaUsuario(){
+    Usuario us;
+    FILE * fptr;
+    char diretorioUsuarios[50];
+    int sequencia = 1, posicao = TotalUsuariosCadastrados();
+    if(posicao == 0){
+        return sequencia;
+    }else{
+        posicao =  (posicao - 1) * sizeof(Usuario);
+    }
+    ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
+
+
+
+    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return sequencia;
+
+    fseek(fptr, posicao, 0);
+    fread(&us, sizeof(Usuario), 1, fptr);
+    fclose(fptr);
+    sequencia = us.Id + 1;
+
+    return sequencia;
+}
+
+void RetornaTodosUsuariosCadastrados(Usuario usrs[]){
+    int indiceAtual = 0;
+    FILE * fptr;
+    char diretorioUsuarios[50];
+    ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
+
+    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return;
+
+    while(fread(&usrs[indiceAtual], sizeof(Usuario), 1, fptr) == 1){
+        indiceAtual++;
+    }
+}
+
+void AdicionarUsuario(Usuario usr){
+    Usuario temp;
+    ResultadoBuscaEmArquivo resultado = BuscaUsuarioPeloId(&temp, usr.Id);
+    FILE * fptr;
+    char diretorioUsuarios[50];
+    ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
+
+    if((fptr = fopen(diretorioUsuarios, "ab+")) == NULL) return;
+
+    if(resultado.EncontrouRegistro){
+        //Atualização
+        fseek(fptr, resultado.Posicao, 0);
+    }
+
+    fwrite(&usr, sizeof(Usuario), 1, fptr);
+    fclose(fptr);
+}
+
+Usuario ObterUsuario(){
+    fflush(stdin);
+    system("cls");
+    Usuario usuario;
+
+    printf(" |==================================================================================|\n");
+    printf(" |                               CADASTRO DE USUARIO                                |\n");
+    printf(" |==================================================================================|\n");
+
+    GetString(" Informe o nome do usuario: ", usuario.Nome);
+    GetString(" Informe o login: ", usuario.Login);
+    ObtemSenha(usuario.Senha, false);
+    usuario.Id = ProximaSequenciaUsuario();
+
+    return usuario;
+}
+
+void ImprimeUsuario(Usuario usr){
+    printf("\n Id   : %d", usr.Id);
+    printf("\n Nome : %s", usr.Nome);
+    printf("\n Login: %s", usr.Login);
+    printf("%c", NEWLINE);
+}
+
+void ImprimeUsuarios(Usuario usrs[], int tamanho){
+    printf(" |==================================================================================|\n");
+    printf(" |                                     USUARIOS                                     |\n");
+    printf(" |==================================================================================|\n");
+
+    for(int i = 0; i < tamanho; i++){
+        ImprimeUsuario(usrs[i]);
+    }
+    printf("\n\n");
 }

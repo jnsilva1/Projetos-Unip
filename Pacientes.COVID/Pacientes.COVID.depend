@@ -71,3 +71,78 @@
 	<Comorbidade.h>
 	<dirent.h>
 
+1618761009 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.c
+	<Comorbidade.h>
+	<dirent.h>
+
+1616461001 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
+	"DataHora.h"
+
+1619397943 c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"OutrosTipos.h"
+
+1616462365 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.c
+	"Endereco.h"
+
+1616463018 c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.h
+	<stdio.h>
+	<stdlib.h>
+
+1619399444 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Paciente.h"
+	"Usuario.h"
+
+1618780858 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
+	"Paciente.h"
+	<stdlib.h>
+	<stdio.h>
+	<dirent.h>
+
+1618759997 c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.h
+	<stdio.h>
+	<stdlib.h>
+	"Pessoa.h"
+	"Comorbidade.h"
+
+1618761001 c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"OutrosTipos.h"
+	"Endereco.h"
+	"DataHora.h"
+
+1619397933 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
+	<stdio.h>
+	<stdlib.h>
+	<malloc.h>
+	<string.h>
+	<conio.h>
+
+1619397965 c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.h
+	<stdio.h>
+	<stdlib.h>
+	"OutrosTipos.h"
+	"DataHora.h"
+
+1618760989 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.c
+	"Pessoa.h"
+	<dirent.h>
+
+1619379500 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
+	"OutrosTipos.h"
+
+1619398499 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
+	<stdio.h>
+	<stdlib.h>
+	"OutrosTipos.h"
+
+1619399205 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
+	"Usuario.h"
+

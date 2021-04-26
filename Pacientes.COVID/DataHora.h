@@ -4,7 +4,7 @@
 #include <time.h>
 #ifndef DATAHORA_H
 #define DATAHORA_H
-#include <OutrosTipos.h>
+#include "OutrosTipos.h"
 
 typedef struct _data {
     int Dia;

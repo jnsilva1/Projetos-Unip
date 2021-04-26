@@ -24,6 +24,12 @@ enum boolean{
 };
 typedef enum boolean bool;
 
+typedef struct resultadoBuscaEmArquivo{
+    long Posicao;
+    bool EncontrouRegistro;
+
+} ResultadoBuscaEmArquivo;
+
 int Length(char str[]);
 /*
  * Function: PadLeft
