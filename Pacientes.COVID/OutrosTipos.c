@@ -1,4 +1,12 @@
 #include "OutrosTipos.h"
+#include <windows.h>
+
+void GoToXY(int x, int y) {
+    COORD c = {x, y};
+    SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE), c);
+    printf("                                                                                     ");
+    SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE), c);
+}
 
 void PadLeft(char preencher, char *_destino, char * original, int limite){
     int strSize = (limite - Length(original)), t = limite + 1;
@@ -393,12 +401,19 @@ bool GetBool(const char * descricao, char trueChar){
 }
 
 double GetDouble(const char * descricao){
-    char sDouble[16];
-    GetString(descricao, sDouble);
-    ReplaceChar(sDouble, ',', '.');
-    char parteInteira[10], parteDecimal[5];
-    Substring(parteInteira, sDouble, 0, StringPrimeiraPosicao(sDouble, '.'));
-    Substring(parteDecimal, sDouble, StringPrimeiraPosicao(sDouble, '.') + 1, 4);
+    char sDouble[16],parteInteira[10], parteDecimal[5];
+    bool valido = true, primeiroLooping = true;
+    do{
+        valido = true;
+        if(!primeiroLooping)
+            printf("\n\n  Valor informado inv%clido.\n\n",160);
+        GetString(descricao, sDouble);
+        ReplaceChar(sDouble, ',', '.');
+        Substring(parteInteira, sDouble, 0, StringPrimeiraPosicao(sDouble, '.'));
+        Substring(parteDecimal, sDouble, StringPrimeiraPosicao(sDouble, '.') + 1, 4);
+        valido = ContemApenasNumero(parteInteira) && ContemApenasNumero(parteDecimal);
+        primeiroLooping = false;
+    }while(!valido);
 
     int tamanhoDecimal = strlen(parteDecimal);
     double valor = 0;

@@ -1,21 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#include "Paciente.h"
-#include "Usuario.h"
-
+#include <stdfix.h>
+#include "Modulos.h"
 int main(void)
 {
-    //Adiciono automaticamente o usuário Administrador.
-    /*AdicionarUsuarioPadrao();*/
-    /*
-    Paciente pa = newPaciente();
-    ArmazenarPacienteEmArquivo(&pa);
+    Inicializar();
 
-    Paciente pac;
-    GetPacienteEmArquivo(&pac, pa.Pessoa.CPF);
-    */
-
+    printf("   ");
     system("pause");
     return 0;
 }

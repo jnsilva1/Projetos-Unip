@@ -6,7 +6,9 @@
 Paciente newPaciente(){
     Paciente _paciente;
     _paciente.Pessoa = newPessoa();
-    _paciente.Comorbidade = newComorbidade();
+    _paciente.Peso = GetDouble("\n  Informe o peso:");
+    _paciente.Altura = GetDouble("\n  Informe a altura:");
+    _paciente.Comorbidade = newComorbidade((int)(_paciente.Peso / (_paciente.Altura * _paciente.Altura)));
 
     return _paciente;
 }

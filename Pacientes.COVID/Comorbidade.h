@@ -9,19 +9,19 @@ typedef struct comorbidade{
     bool Diabetico;
     bool Obeso;
     bool Hipertenso;
+    bool Tuberculoso;
     bool AsmaOuDoencaPulmonar;
+    bool DoencaRenal;
+    bool DoencaNoFigado;
+    bool GestanteAltoRisco;
     bool RelizouAlgumTransplante;
     bool RealizouAlgumaQuimioterapia;
     bool FazDialise;
-    bool PossuiDoencaRenal;
-    bool GestanteAltoRisco;
-    bool PossuiDoencaNoFigado;
-    bool Tuberculoso;
     int IMC;
     Data DataDiagnostico;
 } Comorbidade;
 
-Comorbidade newComorbidade();
+Comorbidade newComorbidade(int imc);
 bool ArmazernarComorbidadeEmArquivo(Comorbidade *  _comorbidade, char * nomeArquivo, char * diretorio);
 Comorbidade RetornaComorbidadeEmArquivo(char * nomeArquivo);
 #endif // COMORBIDADE_H

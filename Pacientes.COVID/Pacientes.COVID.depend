@@ -71,8 +71,8 @@
 	<Comorbidade.h>
 	<dirent.h>
 
-1618761009 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.c
-	<Comorbidade.h>
+1619987635 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.c
+	"Comorbidade.h"
 	<dirent.h>
 
 1616461001 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
@@ -92,14 +92,14 @@
 	<stdio.h>
 	<stdlib.h>
 
-1619970966 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\main.c
+1619990956 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\main.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
-	"Paciente.h"
-	"Usuario.h"
+	<stdfix.h>
+	"Modulos.h"
 
-1619968643 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
+1619987442 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
 	"Paciente.h"
 	<stdlib.h>
 	<stdio.h>
@@ -119,14 +119,14 @@
 	"Endereco.h"
 	"DataHora.h"
 
-1619970927 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
+1619991331 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
 	<stdio.h>
 	<stdlib.h>
 	<malloc.h>
 	<string.h>
 	<conio.h>
 
-1619968520 c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.h
+1619987261 c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.h
 	<stdio.h>
 	<stdlib.h>
 	"OutrosTipos.h"
@@ -136,8 +136,9 @@
 	"Pessoa.h"
 	<dirent.h>
 
-1619971109 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
+1619991014 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
 	"OutrosTipos.h"
+	<windows.h>
 
 1619967820 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
 	<stdio.h>
@@ -145,5 +146,15 @@
 	"OutrosTipos.h"
 
 1619967852 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
+	"Usuario.h"
+
+1619989632 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
+
+1619991368 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"Modulos.h"
+	"OutrosTipos.h"
 	"Usuario.h"
 
