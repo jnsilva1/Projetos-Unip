@@ -30,6 +30,12 @@ typedef struct resultadoBuscaEmArquivo{
 
 } ResultadoBuscaEmArquivo;
 
+typedef struct {
+    char * buffer;
+    int i;
+    int j;
+} SplitString;
+
 int Length(char str[]);
 /*
  * Function: PadLeft
@@ -66,4 +72,5 @@ int StringPrimeiraPosicao(const char * fonte, char oQueProcurar);
 int StringUltimaPosicao(const char * fonte, char oQueProcurar);
 void GetEmail(const char * descricao, char * destino);
 bool GetBool(const char * descricao, char trueChar);
+double GetDouble(const char * descricao);
 #endif // OUTROSTIPOS_H

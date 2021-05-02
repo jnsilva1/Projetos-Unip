@@ -7,6 +7,8 @@
 
 typedef struct paciente{
     Pessoa Pessoa;
+    double Peso;
+    double Altura;
     Comorbidade Comorbidade;
 } Paciente;
 

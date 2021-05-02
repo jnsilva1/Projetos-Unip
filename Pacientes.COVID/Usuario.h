@@ -23,7 +23,11 @@ ResultadoBuscaEmArquivo BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id);
 int ProximaSequenciaUsuario();
 void RetornaTodosUsuariosCadastrados(Usuario usrs[]);
 void AdicionarUsuario(Usuario usr);
-Usuario ObterUsuario();
+Usuario ObterNovoUsuario();
 void ImprimeUsuario(Usuario usr);
 void ImprimeUsuarios(Usuario usrs[], int tamanho);
+bool ExisteUsuarioComLogin(char * login);
+bool GravarUsuario(Usuario usr, bool atualizacao);
+void CadastrarUsuario();
+void ImprimirTodosUsuarios();
 #endif // USUARIO_H

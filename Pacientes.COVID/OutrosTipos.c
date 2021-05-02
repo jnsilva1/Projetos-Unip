@@ -391,3 +391,19 @@ bool GetBool(const char * descricao, char trueChar){
     res = entrada == trueChar;
     return res;
 }
+
+double GetDouble(const char * descricao){
+    char sDouble[16];
+    GetString(descricao, sDouble);
+    ReplaceChar(sDouble, ',', '.');
+    char parteInteira[10], parteDecimal[5];
+    Substring(parteInteira, sDouble, 0, StringPrimeiraPosicao(sDouble, '.'));
+    Substring(parteDecimal, sDouble, StringPrimeiraPosicao(sDouble, '.') + 1, 4);
+
+    int tamanhoDecimal = strlen(parteDecimal);
+    double valor = 0;
+    valor += (double)ConverteParaInteiro(parteDecimal) / (double)Potencia(10,tamanhoDecimal);
+    valor += ConverteParaInteiro(parteInteira);
+
+    return valor;
+}

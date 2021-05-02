@@ -9,8 +9,15 @@ typedef struct comorbidade{
     bool Diabetico;
     bool Obeso;
     bool Hipertenso;
+    bool AsmaOuDoencaPulmonar;
+    bool RelizouAlgumTransplante;
+    bool RealizouAlgumaQuimioterapia;
+    bool FazDialise;
+    bool PossuiDoencaRenal;
+    bool GestanteAltoRisco;
+    bool PossuiDoencaNoFigado;
     bool Tuberculoso;
-    char Outros[255];
+    int IMC;
     Data DataDiagnostico;
 } Comorbidade;
 

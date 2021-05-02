@@ -171,6 +171,47 @@ void RetornaTodosUsuariosCadastrados(Usuario usrs[]){
     }
 }
 
+bool ExisteUsuarioComLogin(char * login){
+    bool resposta = false;
+    int totalUsuarios = TotalUsuariosCadastrados();
+    Usuario users[totalUsuarios];
+    RetornaTodosUsuariosCadastrados(users);
+    StringUpperCase(login);
+
+    for(int i = 0; i < totalUsuarios; i++){
+        StringUpperCase(users[i].Login);
+        resposta = resposta || strcmp(login, users[i].Login) == 0;
+    }
+
+    return resposta;
+}
+
+bool GravarUsuario(Usuario usr, bool atualizacao){
+    if(ExisteUsuarioComLogin(usr.Login) && !atualizacao){
+        printf("\n\n  J%c existe usu%crio cadastrado com o login informado.\n",160,160);
+        getche();
+        return false;
+    }
+
+    AdicionarUsuario(usr);
+    return true;
+}
+
+void CadastrarUsuario(){
+    bool gravou = false;
+    do{
+        Usuario usr = ObterNovoUsuario();
+        gravou = GravarUsuario(usr, false);
+    }while(gravou == false);
+}
+
+void ImprimirTodosUsuarios(){
+    Usuario USRS[TotalUsuariosCadastrados()];
+    RetornaTodosUsuariosCadastrados(USRS);
+    ImprimeUsuarios(USRS, TotalUsuariosCadastrados());
+}
+
+
 void AdicionarUsuario(Usuario usr){
     Usuario temp;
     ResultadoBuscaEmArquivo resultado = BuscaUsuarioPeloId(&temp, usr.Id);
@@ -189,7 +230,7 @@ void AdicionarUsuario(Usuario usr){
     fclose(fptr);
 }
 
-Usuario ObterUsuario(){
+Usuario ObterNovoUsuario(){
     fflush(stdin);
     system("cls");
     Usuario usuario;
@@ -207,13 +248,14 @@ Usuario ObterUsuario(){
 }
 
 void ImprimeUsuario(Usuario usr){
-    printf("\n Id   : %d", usr.Id);
-    printf("\n Nome : %s", usr.Nome);
+    printf("\n    Id: %d", usr.Id);
+    printf("\n  Nome: %s", usr.Nome);
     printf("\n Login: %s", usr.Login);
     printf("%c", NEWLINE);
 }
 
 void ImprimeUsuarios(Usuario usrs[], int tamanho){
+    system("cls");
     printf(" |==================================================================================|\n");
     printf(" |                                     USUARIOS                                     |\n");
     printf(" |==================================================================================|\n");
