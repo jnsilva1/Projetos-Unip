@@ -8,6 +8,7 @@ typedef struct usuario {
     char Login[30];
     char Nome[50];
     char Senha[17];
+    bool Admin;
 } Usuario;
 /*
 bool AdicionarUsuario(Usuario * _usuario);

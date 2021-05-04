@@ -7,6 +7,7 @@ void ObtemNomeCompletoArquivoDeUsuarios(char * _destino){
 }
 
 Usuario AcessarSistema(char * login, char * senha){
+    AdicionarUsuarioPadrao();
     Usuario usuario;
     FILE * fptr;
     bool ENCONTROU = false;
@@ -14,7 +15,7 @@ Usuario AcessarSistema(char * login, char * senha){
     ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
     //Abrindo arquivo para leitura e gravação em modo binário
-    if((fptr = fopen(diretorioUsuarios, "ab+")) == NULL) return usuario;
+    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return usuario;
 
     while(fread(&usuario, sizeof(Usuario), 1,fptr) == 1){
         //Se usuário atual possui os mesmos dados de acesso, saio do laço e retorno o usuário
@@ -38,7 +39,7 @@ void ObtemSenha(char * _dest, bool login){
     const int maxPasswordLength = 15;
     char password[maxPasswordLength+1],ch;
     int characterPosition = 0;
-
+    fflush(stdin);
     printf(" Informe a senha: ", maxPasswordLength);
     while(1){
         ch = getch();
@@ -67,10 +68,11 @@ void ObtemSenha(char * _dest, bool login){
     }
     password[characterPosition] = EMPTYCHAR;
     printf("\n");
-    if(strlen(password) == 0){
-        printf(" Nenhuma senha informada.");
-    }
     strcpy(_dest, password);
+    if(strlen(password) == 0){
+        AddCursorPosition(0,-1);
+        GetString("   Nenhuma senha informada.\n", password);
+    }
 }
 
 int TotalUsuariosCadastrados(){
@@ -93,10 +95,13 @@ void AdicionarUsuarioPadrao(){
     if(TotalUsuariosCadastrados() == 0){
         Usuario user;
         user.Id = 1;
+        user.Login[0] = EMPTYCHAR;
+        user.Nome[0] = EMPTYCHAR;
         user.Nome[0] = EMPTYCHAR;
         strcat(user.Login,"ADMIN");
         strcat(user.Senha,"#UNIP.123");
         strcat(user.Nome,"ADMINISTRADOR");
+        user.Admin = true;
 
         FILE * fptr;
         char diretorioUsuarios[50];

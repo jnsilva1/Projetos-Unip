@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include <string.h>
 #include <conio.h>
+#include <windows.h>
 #ifndef DEFAULT_DIR
 #define DEFAULT_DIR "C:/Pacientes.Covid/"
 #endif // DEFAULT_DIR
@@ -92,4 +93,8 @@ void GetEmail(const char * descricao, char * destino);
 bool GetBool(const char * descricao, char trueChar);
 double GetDouble(const char * descricao);
 void GoToXY(int x, int y);
+void AddCursorPosition(int x, int y);
+COORD GetCursorPosition();
+void LimparTelaAtePontoDeterminado(COORD posInicial);
+void LimparTela();
 #endif // OUTROSTIPOS_H

@@ -44,6 +44,10 @@
 		</Unit>
 		<Unit filename="Endereco.h" />
 		<Unit filename="FileHelper.h" />
+		<Unit filename="Modulos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Modulos.h" />
 		<Unit filename="OutrosTipos.c">
 			<Option compilerVar="CC" />
 		</Unit>
