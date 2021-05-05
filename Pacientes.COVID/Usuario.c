@@ -6,9 +6,9 @@ void ObtemNomeCompletoArquivoDeUsuarios(char * _destino){
     strcat(_destino, "usuarios.unip");
 }
 
-Usuario AcessarSistema(char * login, char * senha){
+Usuario* AcessarSistema(char * login, char * senha){
     AdicionarUsuarioPadrao();
-    Usuario usuario;
+    Usuario* usuario = (Usuario *)malloc(sizeof(Usuario));
     FILE * fptr;
     bool ENCONTROU = false;
     char diretorioUsuarios[50];
@@ -17,18 +17,15 @@ Usuario AcessarSistema(char * login, char * senha){
     //Abrindo arquivo para leitura e gravação em modo binário
     if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return usuario;
 
-    while(fread(&usuario, sizeof(Usuario), 1,fptr) == 1){
+    while(fread(usuario, sizeof(Usuario), 1,fptr) == 1){
         //Se usuário atual possui os mesmos dados de acesso, saio do laço e retorno o usuário
-        if(strcmp(login, usuario.Login) == 0 && strcmp(senha, usuario.Senha) == 0){
+        if(strcmp(login, usuario->Login) == 0 && strcmp(senha, usuario->Senha) == 0){
                 ENCONTROU = true;
             break;
         }
     }
     if(!ENCONTROU){
-        usuario.Id = 0;
-        usuario.Login[0] = EMPTYCHAR;
-        usuario.Nome[0] = EMPTYCHAR;
-        usuario.Senha[0] = EMPTYCHAR;
+        usuario=NULL;
     }
     fclose(fptr);
     return usuario;

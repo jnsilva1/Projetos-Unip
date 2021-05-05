@@ -16,7 +16,7 @@ bool RemoverUsuario(Usuario * _usuario);
 bool EncontrarUsuario(Usuario * _usuario, char * loginName, char * senha);
 */
 void ObtemNomeCompletoArquivoDeUsuarios(char * _destino);
-Usuario AcessarSistema(char * login, char * senha);
+Usuario* AcessarSistema(char * login, char * senha);
 void ObtemSenha(char * _dest, bool login);
 int TotalUsuariosCadastrados();
 void AdicionarUsuarioPadrao();

@@ -25,7 +25,11 @@ typedef struct listaPaciente{
 ListaPaciente* criarListaPaciente();
 void AdicionarPaciente(ListaPaciente * lista, Paciente _paciente);
 void ImprimirListaPaciente(ListaPaciente * lista);
-Paciente newPaciente();
+bool ListaPacienteEstaVazia(ListaPaciente * lista);
+void RemoverNoListaPaciente(ListaPaciente * lista);
+Paciente* NaPosicao(ListaPaciente * lista, int posicao);
+int PosicaoNaLista(ListaPaciente * lista, Paciente * _paciente);
+Paciente* newPaciente();
 bool ArmazenarPacienteEmArquivo(Paciente * _paciente);
 void GetPacienteEmArquivo(Paciente * _paciente, const char * CPFPaciente);
 #endif // PACIENTE_H

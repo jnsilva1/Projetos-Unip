@@ -71,14 +71,14 @@
 	<Comorbidade.h>
 	<dirent.h>
 
-1619987635 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.c
+1620177428 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.c
 	"Comorbidade.h"
 	<dirent.h>
 
-1620174508 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
+1620177502 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
 	"DataHora.h"
 
-1620174441 c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.h
+1620177414 c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -99,19 +99,19 @@
 	<stdfix.h>
 	"Modulos.h"
 
-1620174773 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
+1620177862 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
 	"Paciente.h"
 	<stdlib.h>
 	<stdio.h>
 	<dirent.h>
 
-1620173424 c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.h
+1620182955 c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.h
 	<stdio.h>
 	<stdlib.h>
 	"Pessoa.h"
 	"Comorbidade.h"
 
-1620174608 c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.h
+1620177593 c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -133,24 +133,24 @@
 	"OutrosTipos.h"
 	"DataHora.h"
 
-1620174712 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.c
+1620177636 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.c
 	"Pessoa.h"
 	<dirent.h>
 
 1620175147 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
 	"OutrosTipos.h"
 
-1620175452 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
+1620176423 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
 	<stdio.h>
 	<stdlib.h>
 	"OutrosTipos.h"
 
-1620175489 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
+1620176620 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
 	"Usuario.h"
 
 1620147797 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
 
-1620174979 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
+1620177904 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

@@ -71,11 +71,11 @@ void ImprimeTelefone(Telefone* tel){
 
 
 
-void ImprimePessoa(Pessoa p){
+void ImprimePessoa(Pessoa* p){
     system("cls");
     char nomePessoa[84];
     char EspacoEmBranco[85] = " ";
-    CentralizarString(nomePessoa, p.Nome, 82);
+    CentralizarString(nomePessoa, p->Nome, 82);
     StringUpperCase(nomePessoa);
     CentralizarString(EspacoEmBranco, " ", 82);
 
@@ -87,65 +87,90 @@ void ImprimePessoa(Pessoa p){
 
     //Imprime o CPF
     char _cpf[16],CPF[85];
-    FormataCPF(_cpf, p.CPF);
+    FormataCPF(_cpf, p->CPF);
     PadRight(' ', CPF, _cpf, 62);
     printf(" |               CPF: %s|\n", CPF);
 
+    free(_cpf);
+    free(CPF);
+
    //Imprime a data de nascimento
     char dataNascto[20], txtDtNascto[85];
-    DataToString(dataNascto, &p.DataNascimento);
+    DataToString(dataNascto, &p->DataNascimento);
     PadRight(' ', txtDtNascto, dataNascto, 62);
     printf(" |Data de Nascimento: %s|\n", txtDtNascto);
 
+    free(dataNascto);
+    free(txtDtNascto);
+
     char Idade[3], __idade[85];
-    sprintf(Idade, "%d", CalcularIdade(p.DataNascimento));
+    sprintf(Idade, "%d", CalcularIdade(&p->DataNascimento));
     PadRight(' ', __idade, Idade, 62);
     printf(" |             Idade: %s|\n", __idade);
 
 
     //IMPRIME EMAIL
     char eMail[85];
-    PadRight(' ', eMail, p.Email, 62);
+    PadRight(' ', eMail, p->Email, 62);
     printf(" |            E-Mail: %s|\n", eMail);
+
+    free(eMail);
 
     //Imprime Telefone
     char telefone[85];
-    FormataTelefone(telefone, p.Telefone.DDD, p.Telefone.Numero, p.Telefone.ECelular);
+    FormataTelefone(telefone, p->Telefone.DDD, p->Telefone.Numero, p->Telefone.ECelular);
     PadRight(' ', telefone, telefone, 72);
     printf(" |          %s|\n", telefone);
     printf(" |----------------------------------------------------------------------------------|\n");
 
+    free(telefone);
+
     char Logradouro[85];
-    PadRight(' ', Logradouro, p.Endereco.Logradouro, 62);
+    PadRight(' ', Logradouro, p->Endereco.Logradouro, 62);
     printf(" |        Logradouro: %s|\n", Logradouro);
 
+    free(Logradouro);
+
     char NumeroEndereco[85], num[10];
-    sprintf(num, "%d", p.Endereco.Numero);
+    sprintf(num, "%d", p->Endereco.Numero);
     PadRight(' ', NumeroEndereco, num, 62);
     printf(" |            Numero: %s|\n", NumeroEndereco);
 
+    free(NumeroEndereco);
+    free(num);
+
     char ComplementoEndereco[85];
-    PadRight(' ', ComplementoEndereco, p.Endereco.Complemento, 62);
+    PadRight(' ', ComplementoEndereco, p->Endereco.Complemento, 62);
     printf(" |       Complemento: %s|\n", ComplementoEndereco);
 
+    free(ComplementoEndereco);
+
     char BairroEndereco[85];
-    PadRight(' ', BairroEndereco, p.Endereco.Bairro, 62);
+    PadRight(' ', BairroEndereco, p->Endereco.Bairro, 62);
     printf(" |            Bairro: %s|\n", BairroEndereco);
 
+    free(BairroEndereco);
+
     char CidadeEndereco[85];
-    PadRight(' ', CidadeEndereco, p.Endereco.Cidade, 62);
+    PadRight(' ', CidadeEndereco, p->Endereco.Cidade, 62);
     printf(" |            Cidade: %s|\n", CidadeEndereco);
 
+    free(CidadeEndereco);
+
     char UFEndereco[85];
-    PadRight(' ', UFEndereco, p.Endereco.Estado, 62);
+    PadRight(' ', UFEndereco, p->Endereco.Estado, 62);
     printf(" |                UF: %s|\n", UFEndereco);
 
+    free(UFEndereco);
+
     char CEPEndereco[85], _cep[15];
-    sprintf(_cep, "%ld", p.Endereco.CEP);
+    sprintf(_cep, "%ld", p->Endereco.CEP);
     FormataCEP(_cep, _cep);
     PadRight(' ', CEPEndereco, _cep, 62);
     printf(" |               CEP: %s|\n", CEPEndereco);
 
+    free(CEPEndereco);
+    free(_cep);
 
     printf(" |==================================================================================|\n\n\n\n");
 }
@@ -179,16 +204,16 @@ Pessoa newPessoa(void) {
 * Realiza o Cálculo de Idade
 * Usage: Calculo de Idade
 */
-int CalcularIdade(Data dtNascto){
-    DataHora __agora;
+int CalcularIdade(Data* dtNascto){
+    DataHora* __agora;
     __agora = Agora();
-    return __agora.Data.Ano - dtNascto.Ano;
+    return __agora->Data.Ano - dtNascto->Ano;
 }
 
 /**
  * Usage: Armazena os dados da pessoa informada em um Arquivo com o nome especificado no diretório informado
  */
-bool ArmazernarPessoaEmArquivo(Pessoa _pessoa, char * nomeArquivo, char * diretorio){
+bool ArmazernarPessoaEmArquivo(Pessoa* _pessoa, char * nomeArquivo, char * diretorio){
     FILE *arquivo;
     char fileName[50] = "";
     bool retorno = true;
@@ -204,7 +229,7 @@ bool ArmazernarPessoaEmArquivo(Pessoa _pessoa, char * nomeArquivo, char * direto
         retorno = false;
     }
 
-    if(fwrite(&_pessoa, sizeof(Pessoa), 1,arquivo)!=1){
+    if(fwrite(_pessoa, sizeof(Pessoa), 1,arquivo)!=1){
         retorno = true;
     }
 

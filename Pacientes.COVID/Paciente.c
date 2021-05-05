@@ -3,12 +3,12 @@
 #include <stdio.h>
 #include <dirent.h>
 
-Paciente newPaciente(){
-    Paciente _paciente;
-    _paciente.Pessoa = newPessoa();
-    _paciente.Peso = GetDouble("\n  Informe o peso:");
-    _paciente.Altura = GetDouble("\n  Informe a altura:");
-    _paciente.Comorbidade = newComorbidade((int)(_paciente.Peso / (_paciente.Altura * _paciente.Altura)));
+Paciente* newPaciente(){
+    Paciente* _paciente = (Paciente*)malloc(sizeof(Paciente));
+    _paciente->Pessoa = newPessoa();
+    _paciente->Peso = GetDouble("\n  Informe o peso:");
+    _paciente->Altura = GetDouble("\n  Informe a altura:");
+    _paciente->Comorbidade = newComorbidade((int)(_paciente->Peso / (_paciente->Altura * _paciente->Altura)));
 
     return _paciente;
 }
@@ -28,7 +28,7 @@ bool ArmazenarPacienteEmArquivo(Paciente * _paciente){
         puts("Diretório criado!");
     }
 
-    retorno = retorno && ArmazernarPessoaEmArquivo(_paciente->Pessoa, "pessoa.txt", dirName);
+    retorno = retorno && ArmazernarPessoaEmArquivo(&_paciente->Pessoa, "pessoa.txt", dirName);
     retorno = retorno && ArmazernarComorbidadeEmArquivo(&_paciente->Comorbidade, "comorbidade.txt", dirName);
 
    return retorno;
@@ -79,12 +79,110 @@ void AdicionarPaciente(ListaPaciente * lista, Paciente _paciente){
 }
 
 void ImprimirListaPaciente(ListaPaciente * lista){
-    NoPaciente* ponteiro = lista->inicio;
 
+    if(ListaPacienteEstaVazia(lista)){
+        printf("   Lista vazia!\n");
+        return;
+    }
+
+    NoPaciente* ponteiro = lista->inicio;
     while(ponteiro != NULL){
-        printf("\n   |-----------------------------------------------------------------------------------------------|\n");
-        printf("   %s\n", ponteiro->Paciente.Pessoa.Nome);
-        printf("   %s\n", ponteiro->Paciente.Pessoa);
+        ImprimePessoa(&ponteiro->Paciente.Pessoa);
         ponteiro = ponteiro->proximo;
+
+    }
+}
+
+/**
+ *  Informa se há nós na Lista de Paciente
+ **/
+bool ListaPacienteEstaVazia(ListaPaciente * lista){
+    return (lista->tamanho == 0);
+}
+
+/**
+ * Remove o Primeiro Nó da Lista de Paciente
+ **/
+void RemoverPrimeiroNoListaPaciente(ListaPaciente * lista){
+    if(!ListaPacienteEstaVazia(lista)){
+        NoPaciente * no = lista->inicio;
+        lista->inicio = no->proximo;
+        free(no);
+        lista->tamanho--;
+    }
+}
+
+/**
+ * Retorna o paciente contido na posicao informada da Lista.
+ **/
+Paciente* NaPosicao(ListaPaciente * lista, int posicao){
+
+    if(posicao > 0 && posicao < lista->tamanho){
+        NoPaciente * no = lista->inicio;
+        int i;
+        for(i= 0; i < posicao; i++)
+            no = no->proximo;
+
+        return &no->Paciente;
+    }
+    return NULL;
+}
+
+/**
+ * Retorna a posição em que o paciente está na Lista. Será -1 quando não encontrar
+ **/
+int PosicaoNaLista(ListaPaciente * lista, Paciente * _paciente){
+    if(_paciente != NULL){
+        NoPaciente* no = lista->inicio;
+
+        int posicao = 0;
+        while(no != NULL){
+            //Comparo pelo CPF
+            if(strcmp(no->Paciente.Pessoa.CPF, _paciente->Pessoa.CPF) == 0){
+                break;
+            }
+            no = no->proximo;
+            posicao++;
+        }
+
+        if(no != NULL)
+            return posicao;
+    }
+    return -1;
+}
+
+/**
+ * Remove o paciente da Lista na posição informada
+ **/
+void RemoverPacienteNaPosicao(ListaPaciente* lista, int posicao){
+    if(posicao == 0)
+        RemoverPrimeiroNoListaPaciente(lista);
+    else{
+        NoPaciente* NoAtual = NaPosicao(lista, posicao);
+        if(NoAtual != NULL){
+            NoPaciente* NoAnterior = NaPosicao(lista, posicao - 1);
+            NoAnterior->proximo = NoAtual->proximo;
+
+            free(NoAtual);
+            lista->tamanho--;
+        }
+    }
+}
+
+void AdicionarPacienteNaPosicao(ListaPaciente* lista, Paciente* _paciente, int posicao){
+    if(posicao == 0)
+        AdicionarPaciente(lista, *_paciente);
+    else{
+        NoPaciente* NoAtual = NaPosicao(lista, posicao);
+        if(NoAtual != NULL){
+            NoPaciente* NoAnterior = NaPosicao(lista, posicao - 1);
+
+            NoPaciente* NovoNo = (NoPaciente *)malloc(sizeof(NoPaciente));
+            NovoNo->Paciente = *_paciente;
+
+            NoAnterior->proximo = NovoNo;
+            NovoNo->proximo = NoAtual;
+            lista->tamanho++;
+        }
     }
 }

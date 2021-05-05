@@ -38,7 +38,7 @@ typedef struct dataHora {
     Horario Hora;
 } DataHora;
 
-DataHora Agora();
+DataHora* Agora();
 void DataHoraToString(char * dataHoraString, DataHora* _dt,const char * formato);
 void DataToString(char* destino, Data* _dt);
 void HoraToString(char * destino, Horario* _hora);

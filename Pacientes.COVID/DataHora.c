@@ -1,19 +1,19 @@
 #include "DataHora.h"
 
 ///Instancia a data e hora atual
-DataHora Agora(){
+DataHora* Agora(){
     time_t tempo;
     tempo = time(NULL);
-    DataHora _dataHora;
+    DataHora* _dataHora = (DataHora *)malloc(sizeof(DataHora));
 
     struct tm SysDate = *localtime(&tempo);
-    _dataHora.Data.Ano = SysDate.tm_year + 1900;
-    _dataHora.Data.Mes = SysDate.tm_mon +1;
-    _dataHora.Data.Dia = SysDate.tm_mday;
+    _dataHora->Data.Ano = SysDate.tm_year + 1900;
+    _dataHora->Data.Mes = SysDate.tm_mon +1;
+    _dataHora->Data.Dia = SysDate.tm_mday;
 
-    _dataHora.Hora.Hora = SysDate.tm_hour;
-    _dataHora.Hora.Minuto = SysDate.tm_min;
-    _dataHora.Hora.Segundo = SysDate.tm_sec;
+    _dataHora->Hora.Hora = SysDate.tm_hour;
+    _dataHora->Hora.Minuto = SysDate.tm_min;
+    _dataHora->Hora.Segundo = SysDate.tm_sec;
 
     return _dataHora;
 }

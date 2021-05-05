@@ -6,7 +6,7 @@
 #include "Paciente.h"
 #include "OutrosTipos.h"
 #include "Usuario.h"
-Usuario usuarioLogado;
+Usuario* usuarioLogado;
 
 void ImprimirHeaderPadrao(){
     printf(" |==================================================================================|\n");
@@ -14,11 +14,11 @@ void ImprimirHeaderPadrao(){
     printf(" |==================================================================================|\n\n");
 }
 
-Usuario RealizarLogin(){
+Usuario* RealizarLogin(){
     char senha[30], login[50], texto[255];
     senha[0] = EMPTYCHAR;
     login[0] = EMPTYCHAR;
-    Usuario user;
+    Usuario* user;
     COORD* posInicial = GetCursorPosition();
     do{
         do{
@@ -41,18 +41,18 @@ Usuario RealizarLogin(){
         }while(strlen(senha) ==0);
 
         user = AcessarSistema(login, senha);
-        if(user.Id == 0){
+        if(user == NULL){
             sprintf(texto, "   Usu%crio e/ou senha incorretos. (Pressione qualquer tecla para continuar. . .)", a_AGUDO);
             GetString(texto, login);
             LimparTelaAtePontoDeterminado(posInicial);
         }
-    }while(user.Id == 0);
+    }while(user->Id == 0);
     return user;
 }
 
 void CadastrarPaciente(){
-    Paciente p = newPaciente();
-    ArmazenarPacienteEmArquivo(&p);
+    Paciente* p = newPaciente();
+    ArmazenarPacienteEmArquivo(p);
     printf("Paciente %s armazenado em arquivo com sucesso!\n");
 }
 
@@ -102,7 +102,7 @@ void ImprimirMenu(){
     printf("   1 - Cadastrar Paciente.\n\n");
     printf("   2 - Listar Pacientes.\n\n");
     printf("   3 - Alterar Senha.\n\n", a_AGUDO);
-    if(usuarioLogado.Admin){
+    if(usuarioLogado->Admin){
         printf("   4 - Adicionar Usu%crio.\n\n", a_AGUDO);
     }
     AddCursorPosition(3,0);
@@ -120,7 +120,7 @@ void ImprimirMenu(){
             AlterarSenha();
             break;
         case 4:
-            if(usuarioLogado.Admin)
+            if(usuarioLogado->Admin)
                 CadastrarUsuario();
             else
                 InformaMenuInvalido();

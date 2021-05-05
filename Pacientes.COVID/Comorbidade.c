@@ -35,7 +35,7 @@ Comorbidade newComorbidade(int imc){
 
     _comorbidade.IMC = imc;
 
-    _comorbidade.DataDiagnostico = Agora().Data;
+    _comorbidade.DataDiagnostico = Agora()->Data;
     return _comorbidade;
 }
 
