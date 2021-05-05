@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <dirent.h>
 #include "Modulos.h"
 #include "Paciente.h"
 #include "OutrosTipos.h"
@@ -18,7 +19,7 @@ Usuario RealizarLogin(){
     senha[0] = EMPTYCHAR;
     login[0] = EMPTYCHAR;
     Usuario user;
-    COORD posInicial = GetCursorPosition();
+    COORD* posInicial = GetCursorPosition();
     do{
         do{
 
@@ -55,7 +56,33 @@ void CadastrarPaciente(){
     printf("Paciente %s armazenado em arquivo com sucesso!\n");
 }
 
+
 void ListarPacientes(){
+
+     DIR *dir;
+    struct dirent *lsdir;
+
+    dir = opendir(DEFAULT_DIR);
+
+    /* print all the files and directories within directory */
+    while ( ( lsdir = readdir(dir) ) != NULL )
+    {
+        printf ("%s\n", lsdir->d_name);
+    }
+
+    closedir(dir);
+
+
+    /**
+        [
+        "AMOR",
+        "DINHEIRO",
+        "PROSPERIDADE",
+        "ESPERANCA"
+        ]
+
+
+    **/
 
 }
 

@@ -19,35 +19,37 @@ DataHora Agora(){
 }
 
 /// Converte a  Data e Hora em uma String de acordo com o formato informado: ["dd/mm/aaaa hh:mm:ss", "dd/mm/aaaa hh:mm", "dd/mm/aaaa", "hh:mm:ss"]
-void DataHoraToString(char * dataHoraString,DataHora _dt,const char * formato){
+void DataHoraToString(char * dataHoraString, DataHora* _dt,const char * formato){
 
         if(strcmp("dd/mm/aaaa hh:mm:ss", formato) == 0){
-            sprintf(dataHoraString, "%.2d/%.2d/%d %.2d:%.2d:%.2d", _dt.Data.Dia, _dt.Data.Mes, _dt.Data.Ano, _dt.Hora.Hora, _dt.Hora.Minuto, _dt.Hora.Segundo);
+            sprintf(dataHoraString, "%.2d/%.2d/%d %.2d:%.2d:%.2d", _dt->Data.Dia, _dt->Data.Mes, _dt->Data.Ano, _dt->Hora.Hora, _dt->Hora.Minuto, _dt->Hora.Segundo);
         }else if(strcmp("dd/mm/aaaa hh:mm", formato) == 0){
-            sprintf(dataHoraString, "%.2d/%.2d/%d %.2d:%.2d",  _dt.Data.Dia, _dt.Data.Mes, _dt.Data.Ano, _dt.Hora.Hora, _dt.Hora.Minuto);
+            sprintf(dataHoraString, "%.2d/%.2d/%d %.2d:%.2d",  _dt->Data.Dia, _dt->Data.Mes, _dt->Data.Ano, _dt->Hora.Hora, _dt->Hora.Minuto);
         }else if(strcmp("dd/mm/aaaa", formato) == 0){
-            sprintf(dataHoraString, "%.2d/%.2d/%d", _dt.Data.Dia, _dt.Data.Mes, _dt.Data.Ano);
+            sprintf(dataHoraString, "%.2d/%.2d/%d", _dt->Data.Dia, _dt->Data.Mes, _dt->Data.Ano);
         }else if(strcmp("hh:mm:ss", formato)){
-            sprintf(dataHoraString, "%.2d:%.2d:%.2d", _dt.Hora.Hora, _dt.Hora.Minuto, _dt.Hora.Segundo);
+            sprintf(dataHoraString, "%.2d:%.2d:%.2d", _dt->Hora.Hora, _dt->Hora.Minuto, _dt->Hora.Segundo);
+        }else if(strcmp(S_DATAHORA_FORMATO_HORA, formato)){
+            sprintf(dataHoraString, "%.2d:%.2d", _dt->Hora.Hora, _dt->Hora.Minuto);
         }else{
             dataHoraString[0]= '\0';
         }
 }
 
 ///Retorna a data formadata para string
-void DataToString(char * destino, Data _dt){
+void DataToString(char* destino, Data* _dt){
     DataHora _dts;
-    _dts.Data = _dt;
+    _dts.Data = *_dt;
 
-    DataHoraToString(destino,_dts, "dd/mm/aaaa");
+    DataHoraToString(destino,&_dts, S_DATAHORA_FORMATO_DATA);
 }
 
 ///Retorna a hora formadata para string
-void HoraToString(char * destino, Horario _hora){
+void HoraToString(char * destino, Horario* _hora){
     DataHora _dts;
-    _dts.Hora = _hora;
+    _dts.Hora = *_hora;
 
-    DataHoraToString(destino,_dts, "hh:mm:ss");
+    DataHoraToString(destino,&_dts, S_DATAHORA_FORMATO_HORAS);
 }
 
 /**

@@ -7,18 +7,18 @@ void GoToXY(int x, int y) {
 }
 
 void AddCursorPosition(int x, int y){
-    COORD position = GetCursorPosition();
-    position.X += x;
-    position.Y += y;
-    GoToXY(position.X, position.Y);
+    COORD* position = GetCursorPosition();
+    position->X += x;
+    position->Y += y;
+    GoToXY(position->X, position->Y);
     fflush(stdin);
     printf("                                                                                                ");
-    GoToXY(position.X, position.Y);
+    GoToXY(position->X, position->Y);
 }
 
-void LimparTelaAtePontoDeterminado(COORD posInicial){
-    while(GetCursorPosition().Y > posInicial.Y){
-            while(GetCursorPosition().X > posInicial.X){
+void LimparTelaAtePontoDeterminado(COORD* posInicial){
+    while(GetCursorPosition()->Y > posInicial->Y){
+            while(GetCursorPosition()->X > posInicial->X){
                 AddCursorPosition(-1,0);
             }
         AddCursorPosition(0,-1);
@@ -29,10 +29,10 @@ void LimparTela(){
     system("cls");
 }
 
-COORD GetCursorPosition(){
+COORD* GetCursorPosition(){
     CONSOLE_SCREEN_BUFFER_INFO cbsi;
     GetConsoleScreenBufferInfo(GetStdHandle( STD_OUTPUT_HANDLE), &cbsi);
-    return cbsi.dwCursorPosition;
+    return &cbsi.dwCursorPosition;
 }
 
 void PadLeft(char preencher, char *_destino, char * original, int limite){

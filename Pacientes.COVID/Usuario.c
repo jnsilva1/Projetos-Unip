@@ -117,7 +117,7 @@ void AdicionarUsuarioPadrao(){
     }
 }
 
-ResultadoBuscaEmArquivo BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
+ResultadoBuscaEmArquivo* BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
 
     FILE * fptr;
     ResultadoBuscaEmArquivo res = {0, false};
@@ -125,7 +125,7 @@ ResultadoBuscaEmArquivo BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
     ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
     //Abrindo arquivo para leitura e gravação em modo binário
-    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return res;
+    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return &res;
 
     while(fread(usuarioDestino, sizeof(Usuario), 1,fptr) == 1){
         //Se usuário atual possui os mesmos dados de acesso, saio do laço e retorno o usuário
@@ -136,7 +136,7 @@ ResultadoBuscaEmArquivo BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
         }
     }
     fclose(fptr);
-    return res;
+    return &res;
 }
 
 int ProximaSequenciaUsuario(){
@@ -191,21 +191,21 @@ bool ExisteUsuarioComLogin(char * login){
     return resposta;
 }
 
-bool GravarUsuario(Usuario usr, bool atualizacao){
-    if(ExisteUsuarioComLogin(usr.Login) && !atualizacao){
+bool GravarUsuario(Usuario* usr, bool atualizacao){
+    if(ExisteUsuarioComLogin(usr->Login) && !atualizacao){
         printf("\n\n  J%c existe usu%crio cadastrado com o login informado.\n",160,160);
         getche();
         return false;
     }
 
-    AdicionarUsuario(usr);
+    AdicionarUsuario(&usr);
     return true;
 }
 
 void CadastrarUsuario(){
     bool gravou = false;
     do{
-        Usuario usr = ObterNovoUsuario();
+        Usuario* usr = ObterNovoUsuario();
         gravou = GravarUsuario(usr, false);
     }while(gravou == false);
 }
@@ -217,25 +217,26 @@ void ImprimirTodosUsuarios(){
 }
 
 
-void AdicionarUsuario(Usuario usr){
+void AdicionarUsuario(Usuario* usr){
     Usuario temp;
-    ResultadoBuscaEmArquivo resultado = BuscaUsuarioPeloId(&temp, usr.Id);
+    ResultadoBuscaEmArquivo* resultado = BuscaUsuarioPeloId(&temp, usr->Id);
     FILE * fptr;
     char diretorioUsuarios[50];
     ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
     if((fptr = fopen(diretorioUsuarios, "ab+")) == NULL) return;
 
-    if(resultado.EncontrouRegistro){
+    if(resultado->EncontrouRegistro){
         //Atualização
-        fseek(fptr, resultado.Posicao, 0);
+        fseek(fptr, resultado->Posicao, 0);
     }
 
     fwrite(&usr, sizeof(Usuario), 1, fptr);
     fclose(fptr);
+    free(resultado);
 }
 
-Usuario ObterNovoUsuario(){
+Usuario* ObterNovoUsuario(){
     fflush(stdin);
     system("cls");
     Usuario usuario;
@@ -249,13 +250,13 @@ Usuario ObterNovoUsuario(){
     ObtemSenha(usuario.Senha, false);
     usuario.Id = ProximaSequenciaUsuario();
 
-    return usuario;
+    return &usuario;
 }
 
-void ImprimeUsuario(Usuario usr){
-    printf("\n    Id: %d", usr.Id);
-    printf("\n  Nome: %s", usr.Nome);
-    printf("\n Login: %s", usr.Login);
+void ImprimeUsuario(Usuario* usr){
+    printf("\n    Id: %d", usr->Id);
+    printf("\n  Nome: %s", usr->Nome);
+    printf("\n Login: %s", usr->Login);
     printf("%c", NEWLINE);
 }
 
@@ -266,7 +267,7 @@ void ImprimeUsuarios(Usuario usrs[], int tamanho){
     printf(" |==================================================================================|\n");
 
     for(int i = 0; i < tamanho; i++){
-        ImprimeUsuario(usrs[i]);
+        ImprimeUsuario(&usrs[i]);
     }
     printf("\n\n");
 }

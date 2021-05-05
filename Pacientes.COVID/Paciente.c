@@ -49,3 +49,42 @@ void GetPacienteEmArquivo(Paciente * _paciente, const char * CPFPaciente){
         _paciente->Pessoa = RetornaPessoaEmArquivo(arquivoPessoa);
         _paciente->Comorbidade = RetornaComorbidadeEmArquivo(arquivoComorbidade);
 }
+
+/**
+* Inicializa a lista com os Nós de Pacientes
+*/
+ListaPaciente* criarListaPaciente(){
+    ListaPaciente * lista = (ListaPaciente *) malloc(sizeof(ListaPaciente));
+    lista->tamanho = 0;
+    lista->inicio = NULL;
+
+    return lista;
+}
+
+/**
+ * Adiciona o paciente a lista informada
+ **/
+void AdicionarPaciente(ListaPaciente * lista, Paciente _paciente){
+    //Aloco memória para o nó de paciente
+    NoPaciente* No = (NoPaciente *)malloc(sizeof(NoPaciente));
+
+    //Determino o Nó do paciente
+    No->Paciente = _paciente;
+    //Indico que o próximo nó é o inicio da lista;
+    No->proximo = lista->inicio;
+    //Digo para a lista começar a partir deste novo nó.
+    lista->inicio = No;
+    //Incremento o tamanho da lista
+    lista->tamanho++;
+}
+
+void ImprimirListaPaciente(ListaPaciente * lista){
+    NoPaciente* ponteiro = lista->inicio;
+
+    while(ponteiro != NULL){
+        printf("\n   |-----------------------------------------------------------------------------------------------|\n");
+        printf("   %s\n", ponteiro->Paciente.Pessoa.Nome);
+        printf("   %s\n", ponteiro->Paciente.Pessoa);
+        ponteiro = ponteiro->proximo;
+    }
+}

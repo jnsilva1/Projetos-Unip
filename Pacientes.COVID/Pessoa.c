@@ -58,14 +58,14 @@ Telefone newTelefone(void){
 }
 
 //Imprime o telefone
-void ImprimeTelefone(Telefone tel){
+void ImprimeTelefone(Telefone* tel){
     char num[15];
-    sprintf(num, "%ld",tel.Numero);
+    sprintf(num, "%ld",tel->Numero);
 
-    if(tel.ECelular){
-        printf("Telefone: (%i) %c.%c%c%c%c-%c%c%c%c \n", tel.DDD, num[0], num[1], num[2], num[3], num[4], num[5], num[6], num[7], num[8]);
+    if(tel->ECelular){
+        printf("Telefone: (%i) %c.%c%c%c%c-%c%c%c%c \n", tel->DDD, num[0], num[1], num[2], num[3], num[4], num[5], num[6], num[7], num[8]);
     }else{
-        printf("Telefone: (%i) %c%c%c%c-%c%c%c%c \n", tel.DDD, num[0], num[1], num[2], num[3], num[4], num[5], num[6], num[7]);
+        printf("Telefone: (%i) %c%c%c%c-%c%c%c%c \n", tel->DDD, num[0], num[1], num[2], num[3], num[4], num[5], num[6], num[7]);
     }
 }
 
@@ -93,7 +93,7 @@ void ImprimePessoa(Pessoa p){
 
    //Imprime a data de nascimento
     char dataNascto[20], txtDtNascto[85];
-    DataToString(dataNascto,p.DataNascimento);
+    DataToString(dataNascto, &p.DataNascimento);
     PadRight(' ', txtDtNascto, dataNascto, 62);
     printf(" |Data de Nascimento: %s|\n", txtDtNascto);
 

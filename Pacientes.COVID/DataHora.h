@@ -5,6 +5,21 @@
 #ifndef DATAHORA_H
 #define DATAHORA_H
 #include "OutrosTipos.h"
+#ifndef S_DATAHORA_FORMATO_DATAHORAS
+#define S_DATAHORA_FORMATO_DATAHORAS "dd/mm/aaaa hh:mm:ss"
+#endif // S_DATAHORA_FORMATO_DATAHORAS
+#ifndef S_DATAHORA_FORMATO_DATAHORA
+#define S_DATAHORA_FORMATO_DATAHORA "dd/mm/aaaa hh:mm"
+#endif // S_DATAHORA_FORMATO_DATAHORA
+#ifndef S_DATAHORA_FORMATO_DATA
+#define S_DATAHORA_FORMATO_DATA "dd/mm/aaaa"
+#endif // S_DATAHORA_FORMATO_DATA
+#ifndef S_DATAHORA_FORMATO_HORAS
+#define S_DATAHORA_FORMATO_HORAS "hh:mm:ss"
+#endif // S_DATAHORA_FORMATO_HORAS
+#ifndef S_DATAHORA_FORMATO_HORA
+#define S_DATAHORA_FORMATO_HORA "hh:mm"
+#endif // S_DATAHORA_FORMATO_HORA
 
 typedef struct _data {
     int Dia;
@@ -24,9 +39,9 @@ typedef struct dataHora {
 } DataHora;
 
 DataHora Agora();
-void DataHoraToString(char * dataHoraString, DataHora _dt, const char * formato);
-void DataToString(char * destino, Data _dt);
-
+void DataHoraToString(char * dataHoraString, DataHora* _dt,const char * formato);
+void DataToString(char* destino, Data* _dt);
+void HoraToString(char * destino, Horario* _hora);
 bool EhAnoBissexto(int ano);
 int RetornaQuantidadeDiasNoMes(int mes, int ano);
 Data NewData(int dia, int mes, int ano);

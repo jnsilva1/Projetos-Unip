@@ -23,7 +23,7 @@ typedef struct pessoa {
 } Pessoa;
 
 Telefone newTelefone(void);
-void ImprimeTelefone(Telefone tel);
+void ImprimeTelefone(Telefone* tel);
 Pessoa newPessoa(void);
 void ImprimePessoa(Pessoa p);
 int CalcularIdade(Data dtNascto);

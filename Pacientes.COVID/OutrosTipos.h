@@ -37,6 +37,8 @@
 #define POSICAO_CURSOR_INICIAL 4
 #endif // POSICAO_CURSOR_INICIAL
 
+typedef char* String;
+
 enum boolean{
     true = 1,
     false = 0
@@ -94,7 +96,7 @@ bool GetBool(const char * descricao, char trueChar);
 double GetDouble(const char * descricao);
 void GoToXY(int x, int y);
 void AddCursorPosition(int x, int y);
-COORD GetCursorPosition();
-void LimparTelaAtePontoDeterminado(COORD posInicial);
+COORD* GetCursorPosition();
+void LimparTelaAtePontoDeterminado(COORD* posInicial);
 void LimparTela();
 #endif // OUTROSTIPOS_H
