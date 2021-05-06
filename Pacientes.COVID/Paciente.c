@@ -14,7 +14,6 @@ Paciente* newPaciente(){
 }
 
 bool ArmazenarPacienteEmArquivo(Paciente * _paciente){
-    char fileNamePessoa[50] = "";
     char dirName[50] = "";
     bool retorno = true;
 
@@ -115,7 +114,7 @@ void RemoverPrimeiroNoListaPaciente(ListaPaciente * lista){
 /**
  * Retorna o paciente contido na posicao informada da Lista.
  **/
-Paciente* NaPosicao(ListaPaciente * lista, int posicao){
+NoPaciente* NaPosicao(ListaPaciente * lista, int posicao){
 
     if(posicao > 0 && posicao < lista->tamanho){
         NoPaciente * no = lista->inicio;
@@ -123,7 +122,7 @@ Paciente* NaPosicao(ListaPaciente * lista, int posicao){
         for(i= 0; i < posicao; i++)
             no = no->proximo;
 
-        return &no->Paciente;
+        return no;
     }
     return NULL;
 }

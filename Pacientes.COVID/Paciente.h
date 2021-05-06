@@ -12,10 +12,11 @@ typedef struct paciente{
     Comorbidade Comorbidade;
 } Paciente;
 
-typedef struct noPaciente{
+struct noPaciente{
     Paciente Paciente;
-    struct noPaciente * proximo;
-} NoPaciente;
+    struct noPaciente* proximo;
+};
+typedef struct noPaciente NoPaciente;
 
 typedef struct listaPaciente{
     int tamanho;
@@ -27,7 +28,7 @@ void AdicionarPaciente(ListaPaciente * lista, Paciente _paciente);
 void ImprimirListaPaciente(ListaPaciente * lista);
 bool ListaPacienteEstaVazia(ListaPaciente * lista);
 void RemoverNoListaPaciente(ListaPaciente * lista);
-Paciente* NaPosicao(ListaPaciente * lista, int posicao);
+NoPaciente* NaPosicao(ListaPaciente * lista, int posicao);
 int PosicaoNaLista(ListaPaciente * lista, Paciente * _paciente);
 Paciente* newPaciente();
 bool ArmazenarPacienteEmArquivo(Paciente * _paciente);
