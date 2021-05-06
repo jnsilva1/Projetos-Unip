@@ -13,7 +13,7 @@ typedef struct paciente{
 } Paciente;
 
 struct noPaciente{
-    Paciente Paciente;
+    Paciente* Paciente;
     struct noPaciente* proximo;
 };
 typedef struct noPaciente NoPaciente;
@@ -23,14 +23,21 @@ typedef struct listaPaciente{
     NoPaciente* inicio;
 } ListaPaciente;
 
-ListaPaciente* criarListaPaciente();
-void AdicionarPaciente(ListaPaciente * lista, Paciente _paciente);
-void ImprimirListaPaciente(ListaPaciente * lista);
-bool ListaPacienteEstaVazia(ListaPaciente * lista);
-void RemoverNoListaPaciente(ListaPaciente * lista);
-NoPaciente* NaPosicao(ListaPaciente * lista, int posicao);
-int PosicaoNaLista(ListaPaciente * lista, Paciente * _paciente);
 Paciente* newPaciente();
 bool ArmazenarPacienteEmArquivo(Paciente * _paciente);
 void GetPacienteEmArquivo(Paciente * _paciente, const char * CPFPaciente);
+ListaPaciente* criarListaPaciente();
+void AdicionarPaciente(ListaPaciente * lista, Paciente* _paciente);
+void ImprimirListaPaciente(ListaPaciente * lista);
+bool ListaPacienteEstaVazia(ListaPaciente * lista);
+void RemoverPrimeiroNoListaPaciente(ListaPaciente * lista);
+NoPaciente* NaPosicao(ListaPaciente * lista, int posicao);
+int PosicaoNaLista(ListaPaciente * lista, Paciente * _paciente);
+void RemoverPacienteNaPosicao(ListaPaciente* lista, int posicao);
+void AdicionarPacienteNaPosicao(ListaPaciente* lista, Paciente* _paciente, int posicao);
+void MudarPacientesNaLista(ListaPaciente * lista, Paciente* pacienteA, Paciente* pacienteB);
+NoPaciente* RetornaNoPacientePrimeiroAscendentePorNome(ListaPaciente * lista, int posicaoInicial);
+NoPaciente* RetornaNoPacienteUltimoAscendentePorNome(ListaPaciente * lista, int posicaoInicial);
+void OrdenarListaPorNomeAscendente(ListaPaciente* lista);
+void OrdenarListaPorNomeDescrescente(ListaPaciente* lista);
 #endif // PACIENTE_H

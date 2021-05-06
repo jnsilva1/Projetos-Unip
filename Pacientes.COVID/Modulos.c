@@ -131,7 +131,12 @@ void ImprimirMenu(){
 }
 
 void Inicializar(){
-    ImprimirHeaderPadrao();
+    /*ImprimirHeaderPadrao();
     usuarioLogado = RealizarLogin();
-    ImprimirMenu();
+    ImprimirMenu();*/
+    ListaPaciente* minhaLista = criarListaPaciente();
+    AdicionarPaciente(minhaLista, newPaciente());
+    //AdicionarPaciente(minhaLista, newPaciente());
+    //OrdenarListaPorNomeAscendente(minhaLista);
+    ImprimirListaPaciente(minhaLista);
 }

@@ -99,13 +99,13 @@
 	<stdfix.h>
 	"Modulos.h"
 
-1620265202 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
+1620342144 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
 	"Paciente.h"
 	<stdlib.h>
 	<stdio.h>
 	<dirent.h>
 
-1620265223 c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.h
+1620339952 c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.h
 	<stdio.h>
 	<stdlib.h>
 	"Pessoa.h"
@@ -119,7 +119,7 @@
 	"Endereco.h"
 	"DataHora.h"
 
-1620264843 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
+1620267181 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
 	<stdio.h>
 	<stdlib.h>
 	<malloc.h>
@@ -137,7 +137,7 @@
 	"Pessoa.h"
 	<dirent.h>
 
-1620175147 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
+1620267218 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
 	"OutrosTipos.h"
 
 1620176423 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
@@ -150,7 +150,7 @@
 
 1620265295 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
 
-1620265260 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
+1620342124 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

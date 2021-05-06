@@ -1,6 +1,8 @@
 #include "OutrosTipos.h"
 void GoToXY(int x, int y) {
-    COORD c = {x, y};
+    COORD c;
+    c.X = (SHORT)x;
+    c.Y = (SHORT)y;
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE), c);
     printf("                                                                                     ");
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE), c);
@@ -8,12 +10,12 @@ void GoToXY(int x, int y) {
 
 void AddCursorPosition(int x, int y){
     COORD* position = GetCursorPosition();
-    position->X += x;
-    position->Y += y;
-    GoToXY(position->X, position->Y);
+    x += position->X;
+    y += position->Y;
+    GoToXY(x, y);
     fflush(stdin);
     printf("                                                                                                ");
-    GoToXY(position->X, position->Y);
+    GoToXY(x, y);
 }
 
 void LimparTelaAtePontoDeterminado(COORD* posInicial){
@@ -32,7 +34,8 @@ void LimparTela(){
 COORD* GetCursorPosition(){
     CONSOLE_SCREEN_BUFFER_INFO cbsi;
     GetConsoleScreenBufferInfo(GetStdHandle( STD_OUTPUT_HANDLE), &cbsi);
-    return &cbsi.dwCursorPosition;
+    COORD* POS = &cbsi.dwCursorPosition;
+    return POS;
 }
 
 void PadLeft(char preencher, char *_destino, char * original, int limite){
