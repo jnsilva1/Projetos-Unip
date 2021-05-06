@@ -4,59 +4,75 @@
 #include <string.h>
 #include <conio.h>
 #include <windows.h>
-#ifndef DEFAULT_DIR
-#define DEFAULT_DIR "C:/Pacientes.Covid/"
-#endif // DEFAULT_DIR
-#ifndef OUTROSTIPOS_H
-#ifndef ENTER_CHAR
-#define ENTER_CHAR 13
-#endif // ENTER_CHAR
-#ifndef BLANCKSPACE_CHAR
-#define BLANCKSPACE_CHAR 8
-#endif // BLANCKSPACE_CHAR
-#define OUTROSTIPOS_H
 #define EMPTYCHAR '\0'
 #define BLANKCHAR 32
 #define NEWLINE '\n'
+
+#ifndef DEFAULT_DIR
+#define DEFAULT_DIR "C:/Pacientes.Covid/"
+#endif // DEFAULT_DIR
+
+#ifndef ENTER_CHAR
+#define ENTER_CHAR 13
+#endif // ENTER_CHAR
+
+#ifndef BLANCKSPACE_CHAR
+#define BLANCKSPACE_CHAR 8
+#endif // BLANCKSPACE_CHAR
+
 #ifndef a_TILDE
 #define a_TILDE 198
 #endif // a_TILDE
+
 #ifndef c_DILHA
 #define c_DILHA 135
 #endif // c_DILHA
+
 #ifndef i_AGUDO
 #define i_AGUDO 161
 #endif // i_AGUDO
+
 #ifndef a_AGUDO
 #define a_AGUDO 160
 #endif // a_AGUDO
+
 #ifndef A_TILDE
 #define A_TILDE 199
 #endif // A_TILDE
+
 #ifndef POSICAO_CURSOR_INICIAL
 #define POSICAO_CURSOR_INICIAL 4
 #endif // POSICAO_CURSOR_INICIAL
 
-typedef char* String;
-
+#ifndef BOOLEAN
+#define BOOLEAN
 enum boolean{
     true = 1,
     false = 0
 };
 typedef enum boolean bool;
+#endif // BOOLEAN
 
+#ifndef RESULTADOBUSCAEMARQUIVO
+#define RESULTADOBUSCAEMARQUIVO
 typedef struct resultadoBuscaEmArquivo{
     long Posicao;
     bool EncontrouRegistro;
 
 } ResultadoBuscaEmArquivo;
+#endif // RESULTADOBUSCAEMARQUIVO
 
-typedef struct {
+#ifndef SPLITSTRING
+#define SPLITSTRING
+typedef struct spl {
     char * buffer;
     int i;
     int j;
 } SplitString;
+#endif // SPLITSTRING
 
+#ifndef OUTROSTIPOS_H
+#define OUTROSTIPOS_H
 int Length(char str[]);
 /*
  * Function: PadLeft

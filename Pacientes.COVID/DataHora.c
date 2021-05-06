@@ -49,7 +49,7 @@ void HoraToString(char * destino, Horario* _hora){
     DataHora _dts;
     _dts.Hora = *_hora;
 
-    DataHoraToString(destino,&_dts, S_DATAHORA_FORMATO_HORAS);
+    DataHoraToString(destino,&_dts, S_DATAHORA_FORMATO_HORASS);
 }
 
 /**
@@ -110,6 +110,7 @@ int RetornaQuantidadeDiasNoMes(int mes, int ano){
         return 0;
         break;
     }
+    return 0;
 }
 
 Data NewData(int dia, int mes, int ano){
@@ -157,7 +158,7 @@ Data GetData(const char * mensagem){
         fflush(stdin);
         if(!primeiroLooping) printf("\n  Informe uma data valida!\n");
 
-        if(Length(mensagem) > 1)
+        if(strlen(mensagem) > 1)
             printf("\n%s", mensagem);
         else
             printf("\n  Informe a data (dd/mm/aaaa): ");

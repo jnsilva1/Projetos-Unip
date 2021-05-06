@@ -3,9 +3,6 @@
 #include <conio.h>
 #include <dirent.h>
 #include "Modulos.h"
-#include "Paciente.h"
-#include "OutrosTipos.h"
-#include "Usuario.h"
 Usuario* usuarioLogado;
 
 void ImprimirHeaderPadrao(){
@@ -53,13 +50,13 @@ Usuario* RealizarLogin(){
 void CadastrarPaciente(){
     Paciente* p = newPaciente();
     ArmazenarPacienteEmArquivo(p);
-    printf("Paciente %s armazenado em arquivo com sucesso!\n");
+    printf("Paciente %s armazenado em arquivo com sucesso!\n", p->Pessoa.Nome);
 }
 
 
 void ListarPacientes(){
 
-     DIR *dir;
+    DIR *dir;
     struct dirent *lsdir;
 
     dir = opendir(DEFAULT_DIR);
@@ -101,7 +98,7 @@ void ImprimirMenu(){
     int option;
     printf("   1 - Cadastrar Paciente.\n\n");
     printf("   2 - Listar Pacientes.\n\n");
-    printf("   3 - Alterar Senha.\n\n", a_AGUDO);
+    printf("   3 - Alterar Senha.\n\n");
     if(usuarioLogado->Admin){
         printf("   4 - Adicionar Usu%crio.\n\n", a_AGUDO);
     }

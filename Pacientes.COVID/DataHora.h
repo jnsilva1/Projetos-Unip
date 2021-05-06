@@ -2,24 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "OutrosTipos.h"
 #ifndef DATAHORA_H
 #define DATAHORA_H
-#include "OutrosTipos.h"
-#ifndef S_DATAHORA_FORMATO_DATAHORAS
-#define S_DATAHORA_FORMATO_DATAHORAS "dd/mm/aaaa hh:mm:ss"
-#endif // S_DATAHORA_FORMATO_DATAHORAS
-#ifndef S_DATAHORA_FORMATO_DATAHORA
+
+#define S_DATAHORA_FORMATO_DATAHORASS "dd/mm/aaaa hh:mm:ss"
+
 #define S_DATAHORA_FORMATO_DATAHORA "dd/mm/aaaa hh:mm"
-#endif // S_DATAHORA_FORMATO_DATAHORA
-#ifndef S_DATAHORA_FORMATO_DATA
+
 #define S_DATAHORA_FORMATO_DATA "dd/mm/aaaa"
-#endif // S_DATAHORA_FORMATO_DATA
-#ifndef S_DATAHORA_FORMATO_HORAS
-#define S_DATAHORA_FORMATO_HORAS "hh:mm:ss"
-#endif // S_DATAHORA_FORMATO_HORAS
-#ifndef S_DATAHORA_FORMATO_HORA
+
+#define S_DATAHORA_FORMATO_HORASS "hh:mm:ss"
+
 #define S_DATAHORA_FORMATO_HORA "hh:mm"
-#endif // S_DATAHORA_FORMATO_HORA
+
 
 typedef struct _data {
     int Dia;

@@ -37,7 +37,7 @@ void ObtemSenha(char * _dest, bool login){
     char password[maxPasswordLength+1],ch;
     int characterPosition = 0;
     fflush(stdin);
-    printf(" Informe a senha: ", maxPasswordLength);
+    printf(" Informe a senha: ");
     while(1){
         ch = getch();
         if(ch == ENTER_CHAR){
@@ -117,23 +117,25 @@ void AdicionarUsuarioPadrao(){
 ResultadoBuscaEmArquivo* BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
 
     FILE * fptr;
-    ResultadoBuscaEmArquivo res = {0, false};
+    ResultadoBuscaEmArquivo* res = (ResultadoBuscaEmArquivo* )malloc(sizeof(ResultadoBuscaEmArquivo));
+    res->EncontrouRegistro= false;
+    res->Posicao = 0;
     char diretorioUsuarios[50];
     ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
     //Abrindo arquivo para leitura e gravação em modo binário
-    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return &res;
+    if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return res;
 
     while(fread(usuarioDestino, sizeof(Usuario), 1,fptr) == 1){
         //Se usuário atual possui os mesmos dados de acesso, saio do laço e retorno o usuário
         if(usuarioDestino->Id == Id){
-            res.EncontrouRegistro = true;
-            res.Posicao = ftell(fptr);
+            res->EncontrouRegistro = true;
+            res->Posicao = ftell(fptr);
             break;
         }
     }
     fclose(fptr);
-    return &res;
+    return res;
 }
 
 int ProximaSequenciaUsuario(){
@@ -195,7 +197,7 @@ bool GravarUsuario(Usuario* usr, bool atualizacao){
         return false;
     }
 
-    AdicionarUsuario(&usr);
+    AdicionarUsuario(usr);
     return true;
 }
 
@@ -236,18 +238,18 @@ void AdicionarUsuario(Usuario* usr){
 Usuario* ObterNovoUsuario(){
     fflush(stdin);
     system("cls");
-    Usuario usuario;
+    Usuario* usuario = (Usuario *)malloc(sizeof(Usuario));
 
     printf(" |==================================================================================|\n");
     printf(" |                               CADASTRO DE USUARIO                                |\n");
     printf(" |==================================================================================|\n");
 
-    GetString(" Informe o nome do usuario: ", usuario.Nome);
-    GetString(" Informe o login: ", usuario.Login);
-    ObtemSenha(usuario.Senha, false);
-    usuario.Id = ProximaSequenciaUsuario();
+    GetString(" Informe o nome do usuario: ", usuario->Nome);
+    GetString(" Informe o login: ", usuario->Login);
+    ObtemSenha(usuario->Senha, false);
+    usuario->Id = ProximaSequenciaUsuario();
 
-    return &usuario;
+    return usuario;
 }
 
 void ImprimeUsuario(Usuario* usr){

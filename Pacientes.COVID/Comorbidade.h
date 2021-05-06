@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef COMORBIDADE_H
-#define COMORBIDADE_H
 #include "OutrosTipos.h"
 #include "DataHora.h"
+#ifndef COMORBIDADE_H
+#define COMORBIDADE_H
 
 typedef struct comorbidade{
     bool Diabetico;

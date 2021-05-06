@@ -2,10 +2,18 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <stdfix.h>
-#include "Modulos.h"
+//#include "Modulos.h"
+#include "Paciente.h"
 int main(void)
 {
-    Inicializar();
+    //Inicializar();
+
+    ListaPaciente * lista = criarListaPaciente();
+    AdicionarPaciente(lista, newPaciente());
+    AdicionarPaciente(lista, newPaciente());
+    AdicionarPaciente(lista, newPaciente());
+
+   // OrdenarListaPorNomeAscendente(lista);
 
     printf("   ");
     system("pause");
