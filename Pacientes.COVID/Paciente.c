@@ -6,9 +6,7 @@
 Paciente* newPaciente(){
     Paciente* _paciente = (Paciente*)malloc(sizeof(Paciente));
     _paciente->Pessoa = newPessoa();
-   // _paciente->Peso = GetDouble("\n  Informe o peso:");
-    //_paciente->Altura = GetDouble("\n  Informe a altura:");
-    //_paciente->Comorbidade = newComorbidade((int)(_paciente->Peso / (_paciente->Altura * _paciente->Altura)));
+    _paciente->Comorbidade = newComorbidade((int)(_paciente->Pessoa.Peso / (_paciente->Pessoa.Altura * _paciente->Pessoa.Altura)));
 
     return _paciente;
 }
@@ -77,6 +75,9 @@ void AdicionarPaciente(ListaPaciente * lista, Paciente* _paciente){
     lista->tamanho++;
 }
 
+/*
+ Imprime a lista de pacientes
+ ****/
 void ImprimirListaPaciente(ListaPaciente * lista){
     LimparTela();
     if(ListaPacienteEstaVazia(lista)){
@@ -264,4 +265,24 @@ void OrdenarListaPorNomeDescrescente(ListaPaciente* lista){
     for(i = 0; i < lista->tamanho - 1; i++){
         MudarPacientesNaLista(lista, NaPosicao(lista, i)->Paciente, RetornaNoPacienteUltimoAscendentePorNome(lista, i)->Paciente);
     }
+}
+
+ListaPaciente* CarregarPacientesCadastrados(){
+    ListaPaciente* lista = criarListaPaciente();
+
+    DIR *dir;
+    struct dirent *lsdir;
+
+    dir = opendir(DEFAULT_DIR);
+    /* print all the files and directories within directory */
+    while ( ( lsdir = readdir(dir) ) != NULL )
+    {
+        if(ContemApenasNumero(lsdir->d_name)){
+            Paciente* paciente = (Paciente*)malloc(sizeof(Paciente));
+            GetPacienteEmArquivo(paciente, lsdir->d_name);
+            AdicionarPaciente(lista, paciente);
+        }
+    }
+    closedir(dir);
+    return lista;
 }

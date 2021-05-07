@@ -100,3 +100,13 @@ COORD* GetCursorPosition();
 void LimparTelaAtePontoDeterminado(COORD* posInicial);
 void LimparTela();
 #endif // OUTROSTIPOS_H
+
+#ifndef STRING
+#define STRING
+typedef struct iString{
+    String atual;
+    struct iString * proximo;
+}IString;
+IString* criarNoString(int capacidade);
+String criarString(int capacidade);
+#endif // STRING

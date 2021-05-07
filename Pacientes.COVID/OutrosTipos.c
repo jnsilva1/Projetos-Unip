@@ -441,7 +441,7 @@ double GetDouble(const char * descricao){
         ReplaceChar(sDouble, ',', '.');
         Substring(parteInteira, sDouble, 0, StringPrimeiraPosicao(sDouble, '.'));
         Substring(parteDecimal, sDouble, StringPrimeiraPosicao(sDouble, '.') + 1, 4);
-        valido = ContemApenasNumero(parteInteira) && ContemApenasNumero(parteDecimal);
+        valido = ContemApenasNumero(parteInteira) && (ContemApenasNumero(parteDecimal) || StringPrimeiraPosicao(sDouble, '.') == -1);
         primeiroLooping = false;
     }while(!valido);
 
@@ -451,4 +451,15 @@ double GetDouble(const char * descricao){
     valor += ConverteParaInteiro(parteInteira);
 
     return valor;
+}
+
+IString* criarNoString(int capacidade){
+    IString* no = (IString*)malloc(sizeof(IString));
+    no->atual = criarString(capacidade);
+    no->proximo = NULL;
+    return no;
+}
+
+String criarString(int capacidade){
+    return (String)malloc((capacidade + 1)*sizeof(char));
 }

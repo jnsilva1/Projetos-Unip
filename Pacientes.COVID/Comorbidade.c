@@ -71,9 +71,9 @@ Comorbidade RetornaComorbidadeEmArquivo(char * nomeArquivo){
     FILE * fptr;
     Comorbidade comor;
     if((fptr = fopen(nomeArquivo, "rb")) == NULL) return comor;
-
+    int i =0;
     while(fread(&comor, sizeof(Comorbidade), 1,fptr) == 1)
-        1+1;
+        i++;
     fclose(fptr);
 
     return comor;

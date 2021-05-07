@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #ifndef PACIENTE_H
 #define PACIENTE_H
 #include "Pessoa.h"
@@ -7,8 +8,6 @@
 
 typedef struct paciente{
     Pessoa Pessoa;
-    double Peso;
-    double Altura;
     Comorbidade Comorbidade;
 } Paciente;
 
@@ -40,4 +39,5 @@ NoPaciente* RetornaNoPacientePrimeiroAscendentePorNome(ListaPaciente * lista, in
 NoPaciente* RetornaNoPacienteUltimoAscendentePorNome(ListaPaciente * lista, int posicaoInicial);
 void OrdenarListaPorNomeAscendente(ListaPaciente* lista);
 void OrdenarListaPorNomeDescrescente(ListaPaciente* lista);
+ListaPaciente* CarregarPacientesCadastrados();
 #endif // PACIENTE_H

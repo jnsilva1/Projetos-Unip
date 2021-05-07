@@ -20,6 +20,8 @@ typedef struct pessoa {
     Endereco Endereco;
     Data DataNascimento;
     char Email[60];
+    double Peso;
+    double Altura;
 } Pessoa;
 
 Telefone newTelefone(void);

@@ -104,6 +104,17 @@ void ImprimePessoa(Pessoa* p, bool varios){
     printf(" |             Idade: %s|\n", __idade);
 
 
+    String tempTexto = criarString(60), printTexto = criarString(255);
+    sprintf(tempTexto, "%.2f", p->Peso);
+    PadRight(' ', printTexto, tempTexto, 62);
+    printf(" |              Peso: %s|\n", printTexto);
+
+    sprintf(tempTexto, "%.2f", p->Altura);
+    PadRight(' ', printTexto, tempTexto, 62);
+    printf(" |            Altura: %s|\n", printTexto);
+    free(tempTexto);
+    free(printTexto);
+
     //IMPRIME EMAIL
     char eMail[85];
     PadRight(' ', eMail, p->Email, 62);
@@ -147,13 +158,12 @@ void ImprimePessoa(Pessoa* p, bool varios){
     PadRight(' ', CEPEndereco, _cep, 62);
     printf(" |               CEP: %s|\n", CEPEndereco);
 
-    printf(" |==================================================================================|\n\n\n\n");
+    printf(" |==================================================================================|\n");
 }
 
 //Instancia uma nova pessoa com os dados solicitados em tela
 Pessoa newPessoa(void) {
     system("cls");
-    bool primeiroLoop = true, valido = false;
     Pessoa p;
 
     printf(" |==================================================================================|\n");
@@ -165,6 +175,8 @@ Pessoa newPessoa(void) {
     sprintf(p.CPF, "%lld", GetLongLong("  Informe o CPF (numeros apenas): "));
 
     p.DataNascimento = GetData("  Informe a data de nascimento \'dd/mm/aaaa\': ");
+    p.Peso = GetDouble("\n  Informe o peso:");
+    p.Altura = GetDouble("\n  Informe a altura:");
 
     GetEmail("  Informe o email: ", p.Email);
 

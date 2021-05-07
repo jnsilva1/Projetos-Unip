@@ -59,31 +59,9 @@ void CadastrarPaciente(){
 
 void ListarPacientes(){
 
-     DIR *dir;
-    struct dirent *lsdir;
-
-    dir = opendir(DEFAULT_DIR);
-
-    /* print all the files and directories within directory */
-    while ( ( lsdir = readdir(dir) ) != NULL )
-    {
-        printf ("%s\n", lsdir->d_name);
-    }
-
-    closedir(dir);
-
-
-    /**
-        [
-        "AMOR",
-        "DINHEIRO",
-        "PROSPERIDADE",
-        "ESPERANCA"
-        ]
-
-
-    **/
-
+    ListaPaciente* pacientes =  CarregarPacientesCadastrados();
+    OrdenarListaPorNomeAscendente(pacientes);
+    ImprimirListaPaciente(pacientes);
 }
 
 void AlterarSenha(){
@@ -131,12 +109,7 @@ void ImprimirMenu(){
 }
 
 void Inicializar(){
-    /*ImprimirHeaderPadrao();
+    ImprimirHeaderPadrao();
     usuarioLogado = RealizarLogin();
-    ImprimirMenu();*/
-    ListaPaciente* minhaLista = criarListaPaciente();
-    AdicionarPaciente(minhaLista, newPaciente());
-    AdicionarPaciente(minhaLista, newPaciente());
-    OrdenarListaPorNomeAscendente(minhaLista);
-    ImprimirListaPaciente(minhaLista);
+    ImprimirMenu();
 }
