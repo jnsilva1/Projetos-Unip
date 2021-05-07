@@ -25,7 +25,7 @@ typedef struct pessoa {
 Telefone newTelefone(void);
 void ImprimeTelefone(Telefone* tel);
 Pessoa newPessoa(void);
-void ImprimePessoa(Pessoa* p);
+void ImprimePessoa(Pessoa* p, bool varios);
 int CalcularIdade(Data* dtNascto);
 bool ArmazernarPessoaEmArquivo(Pessoa* _pessoa, char * nomeArquivo, char * diretorio);
 Pessoa RetornaPessoaEmArquivo(char * nomeArquivo);

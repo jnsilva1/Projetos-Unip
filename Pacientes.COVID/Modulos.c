@@ -136,7 +136,7 @@ void Inicializar(){
     ImprimirMenu();*/
     ListaPaciente* minhaLista = criarListaPaciente();
     AdicionarPaciente(minhaLista, newPaciente());
-    //AdicionarPaciente(minhaLista, newPaciente());
-    //OrdenarListaPorNomeAscendente(minhaLista);
+    AdicionarPaciente(minhaLista, newPaciente());
+    OrdenarListaPorNomeAscendente(minhaLista);
     ImprimirListaPaciente(minhaLista);
 }

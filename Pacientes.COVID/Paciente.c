@@ -6,9 +6,9 @@
 Paciente* newPaciente(){
     Paciente* _paciente = (Paciente*)malloc(sizeof(Paciente));
     _paciente->Pessoa = newPessoa();
-    _paciente->Peso = GetDouble("\n  Informe o peso:");
-    _paciente->Altura = GetDouble("\n  Informe a altura:");
-    _paciente->Comorbidade = newComorbidade((int)(_paciente->Peso / (_paciente->Altura * _paciente->Altura)));
+   // _paciente->Peso = GetDouble("\n  Informe o peso:");
+    //_paciente->Altura = GetDouble("\n  Informe a altura:");
+    //_paciente->Comorbidade = newComorbidade((int)(_paciente->Peso / (_paciente->Altura * _paciente->Altura)));
 
     return _paciente;
 }
@@ -78,7 +78,7 @@ void AdicionarPaciente(ListaPaciente * lista, Paciente* _paciente){
 }
 
 void ImprimirListaPaciente(ListaPaciente * lista){
-
+    LimparTela();
     if(ListaPacienteEstaVazia(lista)){
         printf("   Lista vazia!\n");
         return;
@@ -86,7 +86,7 @@ void ImprimirListaPaciente(ListaPaciente * lista){
 
     NoPaciente* ponteiro = lista->inicio;
     while(ponteiro != NULL){
-        ImprimePessoa(&ponteiro->Paciente->Pessoa);
+        ImprimePessoa(&ponteiro->Paciente->Pessoa, true);
         ponteiro = ponteiro->proximo;
     }
 }
@@ -197,8 +197,11 @@ void MudarPacientesNaLista(ListaPaciente * lista, Paciente* pacienteA, Paciente*
     //Obtenho a posição de A e B
     int posicaoA = PosicaoNaLista(lista, pacienteA),
         posicaoB = PosicaoNaLista(lista, pacienteB);
+
         if(posicaoA == -1 || posicaoB == -1) return;
-        NoPaciente* NoA = NULL, *NoB = NULL, *NoAnteA = NULL, *NoAnteB = NULL;
+
+        NoPaciente* NoA = NaPosicao(lista, posicaoA), *NoB = NaPosicao(lista, posicaoB), *NoAnteA = NULL, *NoAnteB = NULL;
+
         if(posicaoA > posicaoB){
             NoA = NaPosicao(lista, posicaoB);
             NoB = NaPosicao(lista, posicaoA);
@@ -207,6 +210,8 @@ void MudarPacientesNaLista(ListaPaciente * lista, Paciente* pacienteA, Paciente*
             posicaoB = temp;
         }
         NoAnteB = NaPosicao(lista, posicaoB - 1);
+
+
         if(NoA == lista->inicio){
             lista->inicio = NoB;
         }else{
@@ -224,7 +229,7 @@ NoPaciente* RetornaNoPacientePrimeiroAscendentePorNome(ListaPaciente * lista, in
     if(ponteiro != NULL){
         NoPaciente* min = ponteiro;
         while(ponteiro != NULL){
-            if(strcmp(min->Paciente->Pessoa.Nome, ponteiro->Paciente->Pessoa.Nome) < 0)
+            if(strcmp(min->Paciente->Pessoa.Nome, ponteiro->Paciente->Pessoa.Nome) > 0)
                 min = ponteiro;
             ponteiro = ponteiro->proximo;
         }
@@ -238,7 +243,7 @@ NoPaciente* RetornaNoPacienteUltimoAscendentePorNome(ListaPaciente * lista, int 
     if(ponteiro != NULL){
         NoPaciente* max = ponteiro;
         while(ponteiro != NULL){
-            if(strcmp(max->Paciente->Pessoa.Nome, ponteiro->Paciente->Pessoa.Nome) > 0)
+            if(strcmp(max->Paciente->Pessoa.Nome, ponteiro->Paciente->Pessoa.Nome) < 0)
                 max = ponteiro;
             ponteiro = ponteiro->proximo;
         }

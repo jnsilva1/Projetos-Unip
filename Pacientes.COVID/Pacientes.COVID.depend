@@ -99,7 +99,7 @@
 	<stdfix.h>
 	"Modulos.h"
 
-1620342144 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
+1620345512 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
 	"Paciente.h"
 	<stdlib.h>
 	<stdio.h>
@@ -111,7 +111,7 @@
 	"Pessoa.h"
 	"Comorbidade.h"
 
-1620177593 c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.h
+1620346223 c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -133,7 +133,7 @@
 	"OutrosTipos.h"
 	"DataHora.h"
 
-1620264843 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.c
+1620346207 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.c
 	"Pessoa.h"
 	<dirent.h>
 
@@ -150,7 +150,7 @@
 
 1620265295 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
 
-1620342124 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
+1620344486 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
