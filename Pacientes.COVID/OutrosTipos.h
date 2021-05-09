@@ -93,7 +93,7 @@ int StringPrimeiraPosicao(const char * fonte, char oQueProcurar);
 int StringUltimaPosicao(const char * fonte, char oQueProcurar);
 void GetEmail(const char * descricao, char * destino);
 bool GetBool(const char * descricao, char trueChar);
-double GetDouble(const char * descricao);
+double GetDouble(const char * descricao, double* min, double* max);
 void GoToXY(int x, int y);
 void AddCursorPosition(int x, int y);
 COORD* GetCursorPosition();

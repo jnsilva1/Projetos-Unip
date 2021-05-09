@@ -14,9 +14,12 @@ Telefone newTelefone(void){
     do{
         fflush(stdin);
         if(!primeiroLoop){
-            printf("\n Telefone inv%clido.",160);
+            AddCursorPosition(0, -1);
+            printf(" Telefone inv%clido.\n",160);
+            getch();
+            AddCursorPosition(0,-1);
         }
-        printf("\n  Informe o telefone com DDD \'(00) 000000000\': ");
+        printf("  Informe o telefone com DDD \'(00) 000000000\': ");
         tempFone[0] = EMPTYCHAR;
         gets(tempFone);
         ReplaceChar(tempFone, '(', (char)0);
@@ -30,7 +33,8 @@ Telefone newTelefone(void){
         //scanf("(%i) %ld", &tel.DDD , &tel.Numero);
 
         fflush(stdin);
-        printf("\n  Eh celular? (S/N): ");
+        AddCursorPosition(0,-1);
+        printf("  Eh celular? (S/N): ");
         scanf("%c", &resposta);
 
         if(resposta == 's' || resposta == 'S'){
@@ -170,18 +174,29 @@ Pessoa newPessoa(void) {
     printf(" |                               CADASTRO DE PESSOA                                 |\n");
     printf(" |==================================================================================|\n");
 
+    AddCursorPosition(0,1);
     GetStringLetrasApenas("  Informe o nome (sem acentos): ", p.Nome);
 
+    AddCursorPosition(0,-1);
     sprintf(p.CPF, "%lld", GetLongLong("  Informe o CPF (numeros apenas): "));
 
+    AddCursorPosition(0, -1);
     p.DataNascimento = GetData("  Informe a data de nascimento \'dd/mm/aaaa\': ");
-    p.Peso = GetDouble("\n  Informe o peso:");
-    p.Altura = GetDouble("\n  Informe a altura:");
 
+    AddCursorPosition(0, -1);
+    double min = 0.01, max = 3;
+    p.Peso = GetDouble("  Informe o peso (99,99): ", &min,NULL);
+
+    AddCursorPosition(0, -1);
+    p.Altura = GetDouble("  Informe a altura (9,99): ", NULL, &max);
+
+    AddCursorPosition(0, -1);
     GetEmail("  Informe o email: ", p.Email);
 
+    AddCursorPosition(0, -1);
     p.Telefone = newTelefone();
 
+    AddCursorPosition(0, -1);
     p.Endereco = newEndereco();
 
     return p;

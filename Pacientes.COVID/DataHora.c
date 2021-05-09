@@ -155,12 +155,17 @@ Data GetData(const char * mensagem){
 
     do{
         fflush(stdin);
-        if(!primeiroLooping) printf("\n  Informe uma data valida!\n");
+        if(!primeiroLooping){
+            AddCursorPosition(0,-1);
+            printf("  Informe uma data valida!\n");
+            getch();
+            AddCursorPosition(0,-1);
+        }
 
         if(Length(mensagem) > 1)
-            printf("\n%s", mensagem);
+            printf("%s", mensagem);
         else
-            printf("\n  Informe a data (dd/mm/aaaa): ");
+            printf("  Informe a data (dd/mm/aaaa): ");
 
        scanf("%d/%d/%d", &_dt.Dia, &_dt.Mes, &_dt.Ano);
        valido = EhUmaDataValida(_dt);
