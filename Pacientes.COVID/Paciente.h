@@ -40,4 +40,6 @@ NoPaciente* RetornaNoPacienteUltimoAscendentePorNome(ListaPaciente * lista, int 
 void OrdenarListaPorNomeAscendente(ListaPaciente* lista);
 void OrdenarListaPorNomeDescrescente(ListaPaciente* lista);
 ListaPaciente* CarregarPacientesCadastrados();
+bool PacienteFazParteGrupoRisco(Paciente* paciente);
+void AdicionarPacienteAGrupoRisco(Paciente* paciente);
 #endif // PACIENTE_H

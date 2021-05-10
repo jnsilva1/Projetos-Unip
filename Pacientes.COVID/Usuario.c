@@ -68,7 +68,7 @@ void ObtemSenha(char * _dest, bool login){
     strcpy(_dest, password);
     if(strlen(password) == 0){
         AddCursorPosition(0,-1);
-        GetString("   Nenhuma senha informada.\n", password);
+        GetString("   Nenhuma senha informada.\n", password, 1);
     }
 }
 
@@ -242,8 +242,8 @@ Usuario* ObterNovoUsuario(){
     printf(" |                               CADASTRO DE USUARIO                                |\n");
     printf(" |==================================================================================|\n");
 
-    GetString(" Informe o nome do usuario: ", usuario.Nome);
-    GetString(" Informe o login: ", usuario.Login);
+    GetString(" Informe o nome do usuario: ", usuario.Nome, 49);
+    GetString(" Informe o login: ", usuario.Login, 29);
     ObtemSenha(usuario.Senha, false);
     usuario.Id = ProximaSequenciaUsuario();
 

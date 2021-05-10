@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #ifndef DEFAULT_DIR
-#define DEFAULT_DIR "C:/Pacientes.Covid/"
+#define DEFAULT_DIR "C:/LUNICARE.COVID/"
 #endif // DEFAULT_DIR
 #ifndef OUTROSTIPOS_H
 #ifndef ENTER_CHAR
@@ -36,6 +36,9 @@
 #ifndef POSICAO_CURSOR_INICIAL
 #define POSICAO_CURSOR_INICIAL 4
 #endif // POSICAO_CURSOR_INICIAL
+#ifndef o_AGUDO
+#define o_AGUDO 162
+#endif // o_AGUDO
 
 typedef char* String;
 
@@ -82,8 +85,8 @@ int ConverteParaInteiro(char * valor);
 long ConverteParaLongo(char * valor);
 long long ConverteParaLongoLongo(char * valor);
 void Substring(char * _dest, char * _source, int start, int length);
-void GetString(const char * descricao, char * destino);
-void GetStringLetrasApenas(const char * descricao, char * destino);
+void GetString(const char * descricao, char * destino, int maxLength);
+void GetStringLetrasApenas(const char * descricao, char * destino, int maxLength);
 long GetLong(const char * descricao);
 int GetInteiro(const char * descricao);
 long long GetLongLong(const char * descricao);
@@ -99,6 +102,7 @@ void AddCursorPosition(int x, int y);
 COORD* GetCursorPosition();
 void LimparTelaAtePontoDeterminado(COORD* posInicial);
 void LimparTela();
+void InicializarDiretorioPadrao();
 #endif // OUTROSTIPOS_H
 
 #ifndef STRING

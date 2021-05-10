@@ -3,9 +3,9 @@ void GoToXY(int x, int y) {
     COORD c;
     c.X = (SHORT)x;
     c.Y = (SHORT)y;
-    printf("                                                                                     ");
+    printf("                                                                                                                                                                                       ");
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE), c);
-    printf("                                                                                     ");
+    printf("                                                                                                                                                                                       ");
     fflush(stdin);
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE), c);
 }
@@ -305,28 +305,38 @@ long long ConverteParaLongoLongo(char * valor){
   * @param descricao Texto a ser exibido para usuário, auxiliando-o a entender o que se pede.
   * @param destino Buffer/Ponteiro de destino da string obtida da entrada
   */
-void GetString(const char * descricao, char * destino){
+void GetString(const char * descricao, char * destino, int maxLength){
+    if(maxLength <= 0) maxLength = (sizeof(*destino)/sizeof(destino[0]));
     fflush(stdin);
     printf("%s", descricao);
-    scanf("%[^\n]s", destino);
-    destino[strlen(destino)] = '\0';
+    int input, len = -1;
+    while((input = getchar()) != EOF && len <= maxLength){
+        len++;
+        if(input == NEWLINE)
+            break;
+
+        destino[len] = (char)input;
+    }
+    //scanf("%[^\n]s", destino);
+    destino[len] = '\0';
+
 }
 /**
   * Obtém uma string da entrada do usuário e realiza a validação se contém apenas letras válidas
   * @param descricao Texto a ser exibido para usuário, auxiliando-o a entender o que se pede.
   * @param destino Buffer/Ponteiro de destino da string obtida da entrada
   */
-void GetStringLetrasApenas(const char * descricao, char * destino){
+void GetStringLetrasApenas(const char * descricao, char * destino, int maxLength){
     bool primeiroLooping = true, valido = false;
     do{
         if(!primeiroLooping){
             AddCursorPosition(0,-1);
-            printf("  Informe apenas letras (sem acentos)!\n");
+            printf("   Informe apenas letras (sem acentos)!\n");
             getch();
             AddCursorPosition(0,-1);
         }
 
-        GetString(descricao, destino);
+        GetString(descricao, destino, maxLength);
         valido = ContemApenasLetras(destino);
         primeiroLooping = false;
     }while(!valido);
@@ -338,11 +348,11 @@ long GetLong(const char * descricao){
     do{
         if(!primeiroLooping){
             AddCursorPosition(0,-1);
-            printf("  Informe apenas numeros!\n");
+            printf("   Informe apenas numeros!\n");
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, stringLong);
+        GetString(descricao, stringLong, 15);
         ReplaceChar(stringLong, '-', EMPTYCHAR);
         ReplaceChar(stringLong, '.', EMPTYCHAR);
         ReplaceChar(stringLong, ',', EMPTYCHAR);
@@ -358,11 +368,11 @@ int GetInteiro(const char * descricao){
     do{
         if(!primeiroLooping){
             AddCursorPosition(0,-1);
-            printf("  Informe apenas numeros!\n");
+            printf("   Informe apenas numeros!\n");
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, stringInteiro);
+        GetString(descricao, stringInteiro, 5);
         ReplaceChar(stringInteiro, '-', EMPTYCHAR);
         ReplaceChar(stringInteiro, '.', EMPTYCHAR);
         ReplaceChar(stringInteiro, ',', EMPTYCHAR);
@@ -378,11 +388,11 @@ long long GetLongLong(const char * descricao){
     do{
         if(!primeiroLooping){
             AddCursorPosition(0,-1);
-            printf("  Informe apenas numeros!\n");
+            printf("   Informe apenas numeros!\n");
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, stringLong);
+        GetString(descricao, stringLong, 15);
         ReplaceChar(stringLong, '-', EMPTYCHAR);
         ReplaceChar(stringLong, '.', EMPTYCHAR);
         valido = ContemApenasNumero(stringLong);
@@ -439,12 +449,12 @@ void GetEmail(const char * descricao, char * destino){
     do{
         if(!primeiroLooping) {
             AddCursorPosition(0,-1);
-            printf("  Informe um e-mail valido!\n");
+            printf("   Informe um e-mail valido!\n");
             getch();
             AddCursorPosition(0,-1);
         }
 
-        GetString(descricao, destino);
+        GetString(descricao, destino, 59);
         valido = EhEmail(destino);
 
         primeiroLooping = false;
@@ -468,11 +478,11 @@ double GetDouble(const char * descricao, double* min, double* max){
         valido = true;
         if(!primeiroLooping){
             AddCursorPosition(0,-1);
-            printf("  Valor informado inv%clido.\n",160);
+            printf("   Valor informado inv%clido.\n",160);
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, sDouble);
+        GetString(descricao, sDouble, 16);
         ReplaceChar(sDouble, ',', '.');
         Substring(parteInteira, sDouble, 0, StringPrimeiraPosicao(sDouble, '.'));
         if(StringPrimeiraPosicao(sDouble, '.') >= 0)
@@ -494,7 +504,7 @@ double GetDouble(const char * descricao, double* min, double* max){
         if(min != NULL && max != NULL){ //Valida máximo e mínimo
             if(!(valor >= *min && valor <= *max)){
                 AddCursorPosition(0,-1);
-                printf("  Informe um valor entre %.2f e $.2f.\n", *min, *max);
+                printf("   Informe um valor entre %.2f e $.2f.\n", *min, *max);
                 getch();
                 AddCursorPosition(0,-1);
                 valor = GetDouble(descricao, min, max);
@@ -502,7 +512,7 @@ double GetDouble(const char * descricao, double* min, double* max){
         }else if(min != NULL && max == NULL){//valida valor mínimo
             if(!(valor >= *min)){
                 AddCursorPosition(0,-1);
-                printf("  Informe um valor maior ou igual a %.2f.\n", *min);
+                printf("   Informe um valor maior ou igual a %.2f.\n", *min);
                 getch();
                 AddCursorPosition(0,-1);
                 valor = GetDouble(descricao, min, max);
@@ -510,7 +520,7 @@ double GetDouble(const char * descricao, double* min, double* max){
         }else if(min == NULL && max != NULL){//valida valor máximo
             if(!(valor <= *max)){
                 AddCursorPosition(0,-1);
-                printf("  Informe um valor menor ou igual a %.2f.\n", *max);
+                printf("   Informe um valor menor ou igual a %.2f.\n", *max);
                 getch();
                 AddCursorPosition(0,-1);
                 valor = GetDouble(descricao, min, max);
@@ -529,5 +539,11 @@ IString* criarNoString(int capacidade){
 }
 
 String criarString(int capacidade){
-    return (String)malloc((capacidade + 1)*sizeof(char));
+    String re = (String)malloc((capacidade + 1)*sizeof(char));
+    re[0] = EMPTYCHAR;
+    return re;
+}
+
+void InicializarDiretorioPadrao(){
+    mkdir(DEFAULT_DIR);
 }

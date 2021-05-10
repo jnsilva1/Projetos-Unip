@@ -6,7 +6,8 @@
 Paciente* newPaciente(){
     Paciente* _paciente = (Paciente*)malloc(sizeof(Paciente));
     _paciente->Pessoa = newPessoa();
-    _paciente->Comorbidade = newComorbidade((int)(_paciente->Pessoa.Peso / (_paciente->Pessoa.Altura * _paciente->Pessoa.Altura)));
+    AddCursorPosition(0,-1);
+    _paciente->Comorbidade = newComorbidade((int)(_paciente->Pessoa.Peso / (_paciente->Pessoa.Altura * _paciente->Pessoa.Altura)), _paciente->Pessoa.Sexo);
 
     return _paciente;
 }
@@ -16,17 +17,17 @@ bool ArmazenarPacienteEmArquivo(Paciente * _paciente){
     bool retorno = true;
 
     strcat(dirName, DEFAULT_DIR);
+    strcat(dirName, "PACIENTES/");
+    mkdir(dirName);
     strcat(dirName,  _paciente->Pessoa.CPF);
     strcat(dirName,  "/");
 
-    if(mkdir(dirName) == -1){
-        puts("Diretório já existe!");
-    }else{
-        puts("Diretório criado!");
-    }
-
     retorno = retorno && ArmazernarPessoaEmArquivo(&_paciente->Pessoa, "pessoa.txt", dirName);
     retorno = retorno && ArmazernarComorbidadeEmArquivo(&_paciente->Comorbidade, "comorbidade.txt", dirName);
+
+    if(PacienteFazParteGrupoRisco(_paciente)){
+        AdicionarPacienteAGrupoRisco(_paciente);
+    }
 
    return retorno;
 }
@@ -35,6 +36,7 @@ void GetPacienteEmArquivo(Paciente * _paciente, const char * CPFPaciente){
 
         char DirName[50] = "", arquivoPessoa[50] = "", arquivoComorbidade[50] = "";
         strcat(DirName, DEFAULT_DIR);
+        strcat(DirName, "PACIENTES/");
         strcat(DirName, CPFPaciente);
         strcat(DirName,"/");
 
@@ -81,13 +83,14 @@ void AdicionarPaciente(ListaPaciente * lista, Paciente* _paciente){
 void ImprimirListaPaciente(ListaPaciente * lista){
     LimparTela();
     if(ListaPacienteEstaVazia(lista)){
-        printf("   Lista vazia!\n");
+        printf("   Nenhum Paciente Cadastrado!\n");
         return;
     }
 
     NoPaciente* ponteiro = lista->inicio;
     while(ponteiro != NULL){
         ImprimePessoa(&ponteiro->Paciente->Pessoa, true);
+        ImprimeComorbidade(&ponteiro->Paciente->Comorbidade);
         ponteiro = ponteiro->proximo;
     }
 }
@@ -272,8 +275,11 @@ ListaPaciente* CarregarPacientesCadastrados(){
 
     DIR *dir;
     struct dirent *lsdir;
+    String diretorio = criarString(255);
+    strcat(diretorio, DEFAULT_DIR);
+    strcat(diretorio, "PACIENTES/");
 
-    dir = opendir(DEFAULT_DIR);
+    dir = opendir(diretorio);
     /* print all the files and directories within directory */
     while ( ( lsdir = readdir(dir) ) != NULL )
     {
@@ -285,4 +291,57 @@ ListaPaciente* CarregarPacientesCadastrados(){
     }
     closedir(dir);
     return lista;
+}
+
+/**
+ * Determina se o paciente faz parte do grupo de risco
+ * Fonte: http://www.oncoguia.org.br/conteudo/grupos-de-risco/13468/1204/
+ */
+bool PacienteFazParteGrupoRisco(Paciente* paciente){
+    return paciente->Comorbidade.IMC >= 40 ||
+           CalcularIdade(&paciente->Pessoa.DataNascimento) > 65 ||
+           paciente->Comorbidade.AsmaOuDoencaPulmonar ||
+           paciente->Comorbidade.Diabetico ||
+           paciente->Comorbidade.DoencaNoFigado ||
+           paciente->Comorbidade.DoencaRenal ||
+           paciente->Comorbidade.FazDialise ||
+           paciente->Comorbidade.GestanteAltoRisco ||
+           paciente->Comorbidade.Hipertenso ||
+           paciente->Comorbidade.HIV ||
+           paciente->Comorbidade.Obeso ||
+           paciente->Comorbidade.RealizouAlgumaQuimioterapia ||
+           paciente->Comorbidade.RelizouAlgumTransplante ||
+           paciente->Comorbidade.Tuberculoso;
+}
+
+void AdicionarPacienteAGrupoRisco(Paciente* paciente){
+    String diretorio = criarString(90);
+    strcat(diretorio, DEFAULT_DIR);
+    strcat(diretorio, "GRUPO.RISCO/");
+
+    mkdir(diretorio);
+
+    strcat(diretorio, paciente->Pessoa.Nome);
+    ReplaceChar(diretorio, ' ', 0);
+    strcat(diretorio, ".txt");
+
+    FILE *arquivo;
+    if((arquivo = fopen(diretorio, "wb")) == NULL){
+        return;
+    }else{
+        String linha = criarString(255);
+        sprintf(linha, "CEP: %ld\n", paciente->Pessoa.Endereco.CEP);
+        fputs(linha, arquivo);
+
+        linha[0] = '\0';
+        sprintf(linha, "IDADE: %d\n", CalcularIdade(&paciente->Pessoa.DataNascimento));
+        fputs(linha, arquivo);
+    }
+
+    fclose(arquivo);
+
+    printf("   Paciente pertence ao grupo de risco!\n");
+    printf("   Arquivo com os dados a serem encaminhados para a Secretaria Municipal da Saude foi salvo no caminho abaixo.\n");
+    puts(diretorio);
+    getch();
 }

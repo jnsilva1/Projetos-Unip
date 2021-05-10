@@ -74,7 +74,7 @@ int RetornaQuantidadeDiasNoMes(int mes, int ano){
         return 31;
         break;
     case 2: //Fevereiro
-        EhAnoBissexto(ano) ? 29 : 28;
+        return EhAnoBissexto(ano) ? 29 : 28;
         break;
     case 3: //Março
         return 31;
@@ -135,7 +135,8 @@ DataHora NewDataHora(int dia, int mes, int ano, int hora, int minuto, int segund
 
 bool EhUmaDataValida(Data _data){
     bool res = true;
-    res = res  && (_data.Dia > 0 && _data.Dia <= RetornaQuantidadeDiasNoMes(_data.Mes, _data.Ano));
+    int UltimoDiaMes = RetornaQuantidadeDiasNoMes(_data.Mes, _data.Ano);
+    res = res  && (_data.Dia > 0 && _data.Dia <= UltimoDiaMes);
     res = res  && (_data.Mes > 0 && _data.Mes <= 12);
     res = res  && _data.Ano > 1900;
     return res;

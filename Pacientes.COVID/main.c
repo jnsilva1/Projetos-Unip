@@ -5,8 +5,7 @@
 #include "Modulos.h"
 int main(void)
 {
-    //Inicializar();
-    newPessoa();
+    Inicializar();
 
     printf("   ");
     system("pause");

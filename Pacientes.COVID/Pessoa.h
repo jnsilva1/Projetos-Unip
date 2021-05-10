@@ -13,6 +13,11 @@ typedef struct telefone {
     bool ECelular;
 } Telefone;
 
+typedef enum sexo{
+    Feminino = 1,
+    Masculino = 2
+} Sexo;
+
 typedef struct pessoa {
     char Nome[50];
     char CPF[12];
@@ -22,6 +27,7 @@ typedef struct pessoa {
     char Email[60];
     double Peso;
     double Altura;
+    Sexo Sexo;
 } Pessoa;
 
 Telefone newTelefone(void);
@@ -31,4 +37,5 @@ void ImprimePessoa(Pessoa* p, bool varios);
 int CalcularIdade(Data* dtNascto);
 bool ArmazernarPessoaEmArquivo(Pessoa* _pessoa, char * nomeArquivo, char * diretorio);
 Pessoa RetornaPessoaEmArquivo(char * nomeArquivo);
+Sexo GetSexo();
 #endif // PESSOA_H

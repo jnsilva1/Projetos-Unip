@@ -24,10 +24,10 @@ Usuario* RealizarLogin(){
         do{
 
             AddCursorPosition(0, -1);
-            GetString("\n   Informe o login: ", login);
+            GetString("\n   Informe o login: ", login, 49);
             if(strlen(login) == 0) {
                 AddCursorPosition(0, -1);
-                GetString("   Nenhum login informado.", senha);
+                GetString("   Nenhum login informado.", senha, 29);
                 AddCursorPosition(0, -1);
             }
         }while(strlen(login) == 0);
@@ -43,17 +43,25 @@ Usuario* RealizarLogin(){
         user = AcessarSistema(login, senha);
         if(user == NULL){
             sprintf(texto, "   Usu%crio e/ou senha incorretos. (Pressione qualquer tecla para continuar. . .)", a_AGUDO);
-            GetString(texto, login);
-            LimparTelaAtePontoDeterminado(posInicial);
+            GetString(texto, login, 2);
+            AddCursorPosition(0,-1);
+            AddCursorPosition(0,-1);
+            AddCursorPosition(0,-1);
         }
-    }while(user->Id == 0);
+    }while(user == NULL);
     return user;
 }
 
 void CadastrarPaciente(){
     Paciente* p = newPaciente();
     ArmazenarPacienteEmArquivo(p);
-    printf("Paciente %s armazenado em arquivo com sucesso!\n", p->Pessoa.Nome);
+    AddCursorPosition(0,-1);
+    printf("   Paciente %s cadastrado com sucesso!\n", p->Pessoa.Nome);
+    getch();
+    AddCursorPosition(0,-1);
+    if(GetBool("   Deseja cadastrar mais um paciente? (S/N): ",'S'))
+        CadastrarPaciente();
+    ImprimirMenu();
 }
 
 
@@ -62,6 +70,9 @@ void ListarPacientes(){
     ListaPaciente* pacientes =  CarregarPacientesCadastrados();
     OrdenarListaPorNomeAscendente(pacientes);
     ImprimirListaPaciente(pacientes);
+
+    getch();
+    ImprimirMenu();
 }
 
 void AlterarSenha(){
@@ -72,6 +83,7 @@ void InformaMenuInvalido(){
     getch();
     ImprimirMenu();
 }
+
 
 void ImprimirMenu(){
     LimparTela();
@@ -109,6 +121,7 @@ void ImprimirMenu(){
 }
 
 void Inicializar(){
+    InicializarDiretorioPadrao();
     ImprimirHeaderPadrao();
     usuarioLogado = RealizarLogin();
     ImprimirMenu();

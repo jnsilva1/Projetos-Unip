@@ -175,23 +175,26 @@ Pessoa newPessoa(void) {
     printf(" |==================================================================================|\n");
 
     AddCursorPosition(0,1);
-    GetStringLetrasApenas("  Informe o nome (sem acentos): ", p.Nome);
+    GetStringLetrasApenas("   Informe o nome (sem acentos): ", p.Nome, 49);
 
     AddCursorPosition(0,-1);
-    sprintf(p.CPF, "%lld", GetLongLong("  Informe o CPF (numeros apenas): "));
+    sprintf(p.CPF, "%lld", GetLongLong("   Informe o CPF (numeros apenas): "));
 
     AddCursorPosition(0, -1);
-    p.DataNascimento = GetData("  Informe a data de nascimento \'dd/mm/aaaa\': ");
+    p.DataNascimento = GetData("   Informe a data de nascimento \'dd/mm/aaaa\': ");
+
+    AddCursorPosition(0, -1);
+    p.Sexo = GetSexo();
 
     AddCursorPosition(0, -1);
     double min = 0.01, max = 3;
-    p.Peso = GetDouble("  Informe o peso (99,99): ", &min,NULL);
+    p.Altura = GetDouble("   Informe a altura (9,99): ", NULL, &max);
 
     AddCursorPosition(0, -1);
-    p.Altura = GetDouble("  Informe a altura (9,99): ", NULL, &max);
+    p.Peso = GetDouble("   Informe o peso (99,99): ", &min,NULL);
 
     AddCursorPosition(0, -1);
-    GetEmail("  Informe o email: ", p.Email);
+    GetEmail("   Informe o email: ", p.Email);
 
     AddCursorPosition(0, -1);
     p.Telefone = newTelefone();
@@ -209,7 +212,18 @@ Pessoa newPessoa(void) {
 int CalcularIdade(Data* dtNascto){
     DataHora* __agora;
     __agora = Agora();
-    return __agora->Data.Ano - dtNascto->Ano;
+    int idade = __agora->Data.Ano - dtNascto->Ano;
+
+    if(__agora->Data.Mes <= dtNascto->Mes){
+        if(__agora->Data.Mes == dtNascto->Mes){ //Mes de Aniversário igual ao atual
+            if(__agora->Data.Dia < dtNascto->Dia) //Dia Atual menor que o dia de aniversário, então removo 1 ano, pois ainda não está completo.
+                idade--;
+        }else{//Mes atual é menor que o mês de aniversário, então diminuo 1 ano, pois ainda não está completo.
+            idade--;
+        }
+    }
+
+    return idade;
 }
 
 /**
@@ -222,11 +236,8 @@ bool ArmazernarPessoaEmArquivo(Pessoa* _pessoa, char * nomeArquivo, char * diret
     strcat(fileName, diretorio);
     strcat(fileName, nomeArquivo);
 
-    if(mkdir(diretorio) == -1){
-        puts("Diretório já existe!");
-    }else{
-        puts("Diretório criado!");
-    }
+    mkdir(diretorio);
+
     if((arquivo = fopen(fileName, "wb")) == NULL){
         retorno = false;
     }
@@ -252,4 +263,20 @@ Pessoa RetornaPessoaEmArquivo(char * nomeArquivo){
     fclose(fptr);
 
     return pes;
+}
+
+Sexo GetSexo(){
+    int val = GetInteiro("   Inform o sexo: \n   1 - Feminino.\n   2 - Masculino.\n   ");
+    AddCursorPosition(0,-1);
+    AddCursorPosition(0,-1);
+    AddCursorPosition(0,-1);
+
+    if(val < 1 || val > 2){
+        AddCursorPosition(0,-1);
+        printf("   Sexo inv%clido!\n", a_AGUDO);
+        getch();
+        AddCursorPosition(0,-1);
+        return GetSexo();
+    }
+    return (Sexo)val;
 }

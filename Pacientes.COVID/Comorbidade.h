@@ -4,6 +4,7 @@
 #define COMORBIDADE_H
 #include "OutrosTipos.h"
 #include "DataHora.h"
+#include "Pessoa.h"
 
 typedef struct comorbidade{
     bool Diabetico;
@@ -17,11 +18,13 @@ typedef struct comorbidade{
     bool RelizouAlgumTransplante;
     bool RealizouAlgumaQuimioterapia;
     bool FazDialise;
+    bool HIV;
     int IMC;
     Data DataDiagnostico;
 } Comorbidade;
 
-Comorbidade newComorbidade(int imc);
+Comorbidade newComorbidade(int imc, Sexo sexo);
 bool ArmazernarComorbidadeEmArquivo(Comorbidade *  _comorbidade, char * nomeArquivo, char * diretorio);
 Comorbidade RetornaComorbidadeEmArquivo(char * nomeArquivo);
+void ImprimeComorbidade(Comorbidade* comor);
 #endif // COMORBIDADE_H
