@@ -193,12 +193,14 @@ bool ExisteUsuarioComLogin(char * login){
     bool resposta = false;
     ListaUsuario* lista = criarListaUsuario();
     RetornaTodosUsuariosCadastrados(lista);
-    StringUpperCase(login);
+    String loginComparer = criarString(strlen(login));
+    strcpy(loginComparer, login);
+    StringUpperCase(loginComparer);
 
     NoUsuario* aux = lista->inicio;
     while(aux != NULL){
         StringUpperCase(aux->atual->Login);
-        resposta = resposta || strcmp(login, aux->atual->Login) == 0;
+        resposta = resposta || strcmp(loginComparer, aux->atual->Login) == 0;
         aux = aux->proximo;
     }
     free(aux);
@@ -223,6 +225,12 @@ void CadastrarUsuario(){
         Usuario* usr = ObterNovoUsuario();
         gravou = GravarUsuario(usr, false);
     }while(gravou == false);
+
+    String texto = criarString(255);
+    sprintf(texto,"  Deseja adicionar mais um usu%crio? (S/N) ", a_AGUDO);
+    if(GetBool(texto, 'S')){
+        CadastrarUsuario();
+    }
 }
 
 void ImprimirTodosUsuarios(){

@@ -466,7 +466,7 @@ bool GetBool(const char * descricao, char trueChar){
     fflush(stdin);
     printf(descricao);
     char entrada = getchar();
-    res = entrada == trueChar;
+    res = (entrada == trueChar || (entrada - 32) == trueChar);
     return res;
 }
 

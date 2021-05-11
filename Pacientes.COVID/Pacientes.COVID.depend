@@ -139,7 +139,7 @@
 	"Pessoa.h"
 	<dirent.h>
 
-1620687447 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
+1620773966 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
 	"OutrosTipos.h"
 
 1620699495 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
@@ -147,12 +147,12 @@
 	<stdlib.h>
 	"OutrosTipos.h"
 
-1620700841 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
+1620774121 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
 	"Usuario.h"
 
 1620686548 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
 
-1620700286 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
+1620772726 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>

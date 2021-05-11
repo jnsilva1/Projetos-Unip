@@ -12,6 +12,17 @@ void ImprimirHeaderPadrao(){
     LimparTela();
     printf(" |==================================================================================|\n");
     printf(" |                                LUNICARE - COVID-19                               |\n");
+    if(usuarioLogado != NULL){
+        printf(" |----------------------------------------------------------------------------------|\n");
+        String label = criarString(255), dataHoraString = criarString(16), labelPrint = criarString(255);
+        DataHoraToString(dataHoraString, Agora(), S_DATAHORA_FORMATO_DATAHORA);
+        sprintf(label,"Usu%crio: %s, Data/Hora: %s", a_AGUDO, usuarioLogado->Nome, dataHoraString);
+        PadLeft(' ', labelPrint, label, 82);
+        printf(" |%s|\n", labelPrint);
+        free(label);
+        free(dataHoraString);
+        free(labelPrint);
+    }
     printf(" |==================================================================================|\n\n");
 }
 
@@ -177,8 +188,10 @@ void ImprimirMenu(){
             AlterarSenha();
             break;
         case 4:
-            if(usuarioLogado->Admin)
+            if(usuarioLogado->Admin){
                 CadastrarUsuario();
+                GetComandoPadrao();
+            }
             else
                 InformaMenuInvalido();
             break;
