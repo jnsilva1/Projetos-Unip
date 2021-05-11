@@ -32,12 +32,16 @@ Usuario* AcessarSistema(char * login, char * senha){
 }
 
 
-void ObtemSenha(char * _dest, bool login){
+void ObtemSenha(char * _dest, bool login, String descricao){
     const int maxPasswordLength = 15;
     char password[maxPasswordLength+1],ch;
     int characterPosition = 0;
     fflush(stdin);
-    printf(" Informe a senha: ", maxPasswordLength);
+    if(descricao != NULL){
+        printf(descricao, maxPasswordLength);
+    }else{
+        printf(" Informe a senha (%d caracteres): ", maxPasswordLength);
+    }
     while(1){
         ch = getch();
         if(ch == ENTER_CHAR){
@@ -117,7 +121,9 @@ void AdicionarUsuarioPadrao(){
 ResultadoBuscaEmArquivo* BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
 
     FILE * fptr;
-    ResultadoBuscaEmArquivo res = {0, false};
+    ResultadoBuscaEmArquivo* res = (ResultadoBuscaEmArquivo*)malloc(sizeof(ResultadoBuscaEmArquivo));
+    res->EncontrouRegistro = false;
+    res->Posicao = -1;
     char diretorioUsuarios[50];
     ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
@@ -127,13 +133,13 @@ ResultadoBuscaEmArquivo* BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
     while(fread(usuarioDestino, sizeof(Usuario), 1,fptr) == 1){
         //Se usuário atual possui os mesmos dados de acesso, saio do laço e retorno o usuário
         if(usuarioDestino->Id == Id){
-            res.EncontrouRegistro = true;
-            res.Posicao = ftell(fptr);
+            res->EncontrouRegistro = true;
+            res->Posicao = ftell(fptr);
             break;
         }
     }
     fclose(fptr);
-    return &res;
+    return res;
 }
 
 int ProximaSequenciaUsuario(){
@@ -160,7 +166,7 @@ int ProximaSequenciaUsuario(){
     return sequencia;
 }
 
-void RetornaTodosUsuariosCadastrados(Usuario usrs[]){
+void RetornaTodosUsuariosCadastrados(ListaUsuario* lista){
     int indiceAtual = 0;
     FILE * fptr;
     char diretorioUsuarios[50];
@@ -168,23 +174,35 @@ void RetornaTodosUsuariosCadastrados(Usuario usrs[]){
 
     if((fptr = fopen(diretorioUsuarios, "rb")) == NULL) return;
 
-    while(fread(&usrs[indiceAtual], sizeof(Usuario), 1, fptr) == 1){
+    NoUsuario* no = criarNoUsuario();
+    Usuario* usr = criarUsuario();
+    while(fread(usr, sizeof(Usuario), 1, fptr) == 1){
+        no->atual = usr;
+        no->proximo = lista->inicio;
+        lista->inicio = no;
+        lista->tamanho++;
+        no = criarNoUsuario();
+        usr = criarUsuario();
         indiceAtual++;
     }
+    free(no);
+    free(usr);
 }
 
 bool ExisteUsuarioComLogin(char * login){
     bool resposta = false;
-    int totalUsuarios = TotalUsuariosCadastrados();
-    Usuario users[totalUsuarios];
-    RetornaTodosUsuariosCadastrados(users);
+    ListaUsuario* lista = criarListaUsuario();
+    RetornaTodosUsuariosCadastrados(lista);
     StringUpperCase(login);
 
-    for(int i = 0; i < totalUsuarios; i++){
-        StringUpperCase(users[i].Login);
-        resposta = resposta || strcmp(login, users[i].Login) == 0;
+    NoUsuario* aux = lista->inicio;
+    while(aux != NULL){
+        StringUpperCase(aux->atual->Login);
+        resposta = resposta || strcmp(login, aux->atual->Login) == 0;
+        aux = aux->proximo;
     }
-
+    free(aux);
+    free(lista);
     return resposta;
 }
 
@@ -195,7 +213,7 @@ bool GravarUsuario(Usuario* usr, bool atualizacao){
         return false;
     }
 
-    AdicionarUsuario(&usr);
+    AdicionarUsuario(usr);
     return true;
 }
 
@@ -208,63 +226,129 @@ void CadastrarUsuario(){
 }
 
 void ImprimirTodosUsuarios(){
-    Usuario USRS[TotalUsuariosCadastrados()];
-    RetornaTodosUsuariosCadastrados(USRS);
-    ImprimeUsuarios(USRS, TotalUsuariosCadastrados());
+    ListaUsuario* lista = criarListaUsuario();
+    RetornaTodosUsuariosCadastrados(lista);
+    ImprimeUsuarios(lista);
+    free(lista);
 }
 
+int RetornaPosicaoUsuario(ListaUsuario* lista, Usuario* usr){
+    int pos = 0;
+    NoUsuario* no = lista->inicio;
+    while(no!= NULL){
+        if(no->atual->Id == usr->Id || strcmp(no->atual->Login, usr->Login) == 0)
+            return pos;
+        no = no->proximo;
+        pos++;
+    }
+    return -1;
+}
+
+NoUsuario* RetornaNoUsuarioNaPosicao(ListaUsuario* lista, int posicao){
+    if(posicao < 0 || posicao > lista->tamanho) return NULL;
+    NoUsuario* no = lista->inicio;
+    int pos=0;
+    while(no != NULL){
+        if(pos == posicao)
+            return no;
+
+        no = no->proximo;
+        pos++;
+    }
+    return NULL;
+}
 
 void AdicionarUsuario(Usuario* usr){
-    Usuario temp;
-    ResultadoBuscaEmArquivo* resultado = BuscaUsuarioPeloId(&temp, usr->Id);
+    int totalUsuarios = TotalUsuariosCadastrados(), pos = 0;
+    ListaUsuario* lista = criarListaUsuario();
+    RetornaTodosUsuariosCadastrados(lista);
+    NoUsuario* no = RetornaNoUsuarioNaPosicao(lista, RetornaPosicaoUsuario(lista, usr));
+    if(no != NULL){
+        Usuario* aux = no->atual;
+        no->atual = usr;
+        free(aux);
+    }else{
+        no = criarNoUsuario();
+        no->atual = usr;
+        no->proximo = lista->inicio;
+        lista->inicio = no;
+    }
+
     FILE * fptr;
     char diretorioUsuarios[50];
     ObtemNomeCompletoArquivoDeUsuarios(diretorioUsuarios);
 
-    if((fptr = fopen(diretorioUsuarios, "ab+")) == NULL) return;
+    if((fptr = fopen(diretorioUsuarios, "wb")) == NULL) return;
 
-    if(resultado->EncontrouRegistro){
-        //Atualização
-        fseek(fptr, resultado->Posicao, 0);
+    no =  lista->inicio;
+    while(no != NULL){
+        fwrite(no->atual, sizeof(Usuario), 1, fptr);
+        no = no->proximo;
     }
 
-    fwrite(&usr, sizeof(Usuario), 1, fptr);
     fclose(fptr);
-    free(resultado);
+    free(no);
+    free(lista);
 }
 
 Usuario* ObterNovoUsuario(){
     fflush(stdin);
     system("cls");
-    Usuario usuario;
+    Usuario* usuario = (Usuario*)malloc(sizeof(Usuario));
 
     printf(" |==================================================================================|\n");
     printf(" |                               CADASTRO DE USUARIO                                |\n");
     printf(" |==================================================================================|\n");
 
-    GetString(" Informe o nome do usuario: ", usuario.Nome, 49);
-    GetString(" Informe o login: ", usuario.Login, 29);
-    ObtemSenha(usuario.Senha, false);
-    usuario.Id = ProximaSequenciaUsuario();
+    GetString(" Informe o nome do usuario: ", usuario->Nome, 49);
+    GetString(" Informe o login: ", usuario->Login, 29);
+    ObtemSenha(usuario->Senha, false, NULL);
+    usuario->Id = ProximaSequenciaUsuario();
 
-    return &usuario;
+    return usuario;
 }
 
 void ImprimeUsuario(Usuario* usr){
-    printf("\n    Id: %d", usr->Id);
-    printf("\n  Nome: %s", usr->Nome);
-    printf("\n Login: %s", usr->Login);
+    printf("\n      Id: %d", usr->Id);
+    printf("\n    Nome: %s", usr->Nome);
+    printf("\n   Login: %s", usr->Login);
     printf("%c", NEWLINE);
 }
 
-void ImprimeUsuarios(Usuario usrs[], int tamanho){
+void ImprimeUsuarios(ListaUsuario* lista){
     system("cls");
     printf(" |==================================================================================|\n");
     printf(" |                                     USUARIOS                                     |\n");
     printf(" |==================================================================================|\n");
 
-    for(int i = 0; i < tamanho; i++){
-        ImprimeUsuario(&usrs[i]);
+    NoUsuario* no = lista->inicio;
+    while(no != NULL){
+        ImprimeUsuario(no->atual);
+        no = no->proximo;
     }
     printf("\n\n");
+}
+
+ListaUsuario* criarListaUsuario(){
+    ListaUsuario* lista = (ListaUsuario*)malloc(sizeof(ListaUsuario));
+    lista->inicio = NULL;
+    lista->tamanho = 0;
+    return lista;
+}
+
+
+NoUsuario* criarNoUsuario(){
+    NoUsuario* no = (NoUsuario*)malloc(sizeof(NoUsuario));
+    no->atual = NULL;
+    no->proximo = NULL;
+    return no;
+}
+
+Usuario* criarUsuario(){
+    Usuario* usuario = (Usuario*)malloc(sizeof(Usuario));
+    usuario->Id = 0;
+    usuario->Nome[0] = EMPTYCHAR;
+    usuario->Login[0] = EMPTYCHAR;
+    usuario->Senha[0] = EMPTYCHAR;
+    usuario->Admin = false;
 }

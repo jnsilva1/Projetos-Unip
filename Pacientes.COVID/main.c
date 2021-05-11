@@ -7,7 +7,5 @@ int main(void)
 {
     Inicializar();
 
-    printf("   ");
-    system("pause");
     return 0;
 }

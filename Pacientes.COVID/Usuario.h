@@ -10,6 +10,16 @@ typedef struct usuario {
     char Senha[17];
     bool Admin;
 } Usuario;
+
+typedef struct noUsuario{
+    Usuario* atual;
+    struct noUsuario* proximo;
+}NoUsuario;
+
+typedef struct listaUsuario{
+    NoUsuario* inicio;
+    int tamanho;
+}ListaUsuario;
 /*
 bool AdicionarUsuario(Usuario * _usuario);
 bool RemoverUsuario(Usuario * _usuario);
@@ -17,18 +27,22 @@ bool EncontrarUsuario(Usuario * _usuario, char * loginName, char * senha);
 */
 void ObtemNomeCompletoArquivoDeUsuarios(char * _destino);
 Usuario* AcessarSistema(char * login, char * senha);
-void ObtemSenha(char * _dest, bool login);
+void ObtemSenha(char * _dest, bool login, String descricao);
 int TotalUsuariosCadastrados();
 void AdicionarUsuarioPadrao();
 ResultadoBuscaEmArquivo* BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id);
 int ProximaSequenciaUsuario();
-void RetornaTodosUsuariosCadastrados(Usuario usrs[]);
+void RetornaTodosUsuariosCadastrados(ListaUsuario* lista);
 void AdicionarUsuario(Usuario* usr);
 Usuario* ObterNovoUsuario();
 void ImprimeUsuario(Usuario* usr);
-void ImprimeUsuarios(Usuario usrs[], int tamanho);
+void ImprimeUsuarios(ListaUsuario* lista);
 bool ExisteUsuarioComLogin(char * login);
 bool GravarUsuario(Usuario* usr, bool atualizacao);
 void CadastrarUsuario();
 void ImprimirTodosUsuarios();
+int RetornaPosicaoUsuario(ListaUsuario* lista, Usuario* usr);
+ListaUsuario* criarListaUsuario();
+NoUsuario* criarNoUsuario();
+Usuario* criarUsuario();
 #endif // USUARIO_H

@@ -94,11 +94,7 @@ Comorbidade RetornaComorbidadeEmArquivo(char * nomeArquivo){
 void ImprimeComorbidade(Comorbidade* comor){
     String textoImpressao = criarString(255), textoAuxiliar = criarString(150);
 
-    CentralizarString(textoImpressao, "COMORBIDADES", 82);
-    printf(" |%s|\n", textoImpressao);
 
-    textoAuxiliar[0] = EMPTYCHAR;
-    textoImpressao[0] = EMPTYCHAR;
     sprintf(textoAuxiliar, "%d", comor->IMC);
     PadRight(' ', textoImpressao, textoAuxiliar, 62);
     printf(" |               IMC: %s|\n", textoImpressao);
@@ -109,6 +105,11 @@ void ImprimeComorbidade(Comorbidade* comor){
     PadRight(' ', textoImpressao, textoAuxiliar, 62);
     printf(" |  Data Diagn%cstico: %s|\n", o_AGUDO,textoImpressao);
 
+    printf(" |----------------------------------------------------------------------------------|\n");
+    textoAuxiliar[0] = EMPTYCHAR;
+    textoImpressao[0] = EMPTYCHAR;
+    CentralizarString(textoImpressao, "COMORBIDADES", 82);
+    printf(" |%s|\n", textoImpressao);
     /***
     bool Diabetico;
     bool Obeso;
@@ -192,7 +193,7 @@ void ImprimeComorbidade(Comorbidade* comor){
         if(comor->GestanteAltoRisco){
             textoAuxiliar[0] = EMPTYCHAR;
             textoImpressao[0] = EMPTYCHAR;
-            sprintf(textoAuxiliar, "  Gesta%c%c de Alto Risco.",c_DILHA, a_TILDE);
+            sprintf(textoAuxiliar, "  Gesta%c%co de Alto Risco.",c_DILHA, a_TILDE);
             PadRight(' ', textoImpressao, textoAuxiliar, 82);
             printf(" |%s|\n", textoImpressao);
 
@@ -201,7 +202,7 @@ void ImprimeComorbidade(Comorbidade* comor){
         if(comor->Hipertenso){
             textoAuxiliar[0] = EMPTYCHAR;
             textoImpressao[0] = EMPTYCHAR;
-            sprintf(textoAuxiliar, "  Hiperten%c%c.",c_DILHA, a_TILDE);
+            sprintf(textoAuxiliar, "  Hiperten%c%co.",c_DILHA, a_TILDE);
             PadRight(' ', textoImpressao, textoAuxiliar, 82);
             printf(" |%s|\n", textoImpressao);
 

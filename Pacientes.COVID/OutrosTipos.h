@@ -39,6 +39,9 @@
 #ifndef o_AGUDO
 #define o_AGUDO 162
 #endif // o_AGUDO
+#ifndef ESC
+#define ESC 27
+#endif // ESC
 
 typedef char* String;
 

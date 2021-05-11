@@ -342,6 +342,6 @@ void AdicionarPacienteAGrupoRisco(Paciente* paciente){
 
     printf("   Paciente pertence ao grupo de risco!\n");
     printf("   Arquivo com os dados a serem encaminhados para a Secretaria Municipal da Saude foi salvo no caminho abaixo.\n");
-    puts(diretorio);
+    printf("   %s\n\n",diretorio);
     getch();
 }
