@@ -1,7 +1,10 @@
 #include "Pessoa.h"
 #include <dirent.h>
 
-//Realiza a criação de um novo telefone
+/**
+ * Realiza a criação de um novo telefone através das entradas do usuário no console
+ * @return estrutura da dados do tipo Telefone com os dados obtidos
+ **/
 Telefone newTelefone(void){
 
     Telefone tel;
@@ -61,7 +64,10 @@ Telefone newTelefone(void){
     return tel;
 }
 
-//Imprime o telefone
+/**
+ * Imprime o telefone em tela com formatação específica
+ * @param tel ponteiro para o telefone a ser impresso
+ **/
 void ImprimeTelefone(Telefone* tel){
     char num[15];
     sprintf(num, "%ld",tel->Numero);
@@ -73,8 +79,11 @@ void ImprimeTelefone(Telefone* tel){
     }
 }
 
-
-
+/**
+ * Realiza a impressão dos dados da pessoa em tela
+ * @param p ponteiro para a pessoa a ser impressa
+ * @param varios indica se devo ou não limpar a tela antes de imprimir os dados (Deve ser true quando for impresso em laço)
+ ***/
 void ImprimePessoa(Pessoa* p, bool varios){
     if(!varios)
         LimparTela();
@@ -165,7 +174,10 @@ void ImprimePessoa(Pessoa* p, bool varios){
     printf(" |==================================================================================|\n");
 }
 
-//Instancia uma nova pessoa com os dados solicitados em tela
+/**
+ * Instancia uma nova pessoa com os dados solicitados em tela
+ *@return a estrutura de dados do tipo Pessoa com os dados obtidos
+ **/
 Pessoa newPessoa(void) {
     system("cls");
     Pessoa p;
@@ -208,6 +220,8 @@ Pessoa newPessoa(void) {
 /**
 * Realiza o Cálculo de Idade
 * Usage: Calculo de Idade
+* @param dtNascto ponteiro para a data de nascimento
+* @return idade
 */
 int CalcularIdade(Data* dtNascto){
     DataHora* __agora;
@@ -228,6 +242,9 @@ int CalcularIdade(Data* dtNascto){
 
 /**
  * Usage: Armazena os dados da pessoa informada em um Arquivo com o nome especificado no diretório informado
+ * @param _pessoa ponteiro para pessoa a ser armazenada
+ * @param nomeArquivo nome do arquivo em que será armazenado
+ * @param diretorio diretório em que se quer armazenar
  */
 bool ArmazernarPessoaEmArquivo(Pessoa* _pessoa, char * nomeArquivo, char * diretorio){
     FILE *arquivo;
@@ -250,7 +267,11 @@ bool ArmazernarPessoaEmArquivo(Pessoa* _pessoa, char * nomeArquivo, char * diret
     return retorno;
 }
 
-
+/**
+ * Responsável por obter os dados da pessoa que estão armazenados em arquivo
+ * @param nomeArquivo nome do arquivo que se quer obter os dados
+ * @return estrutura de dados do tipo Pessoa com os dados obtidos
+ **/
 Pessoa RetornaPessoaEmArquivo(char * nomeArquivo){
 
     FILE * fptr;
@@ -265,6 +286,10 @@ Pessoa RetornaPessoaEmArquivo(char * nomeArquivo){
     return pes;
 }
 
+/**
+ * Responsável por obter um sexo de acordo com a entrada do usuário no console.
+ * @return o enum sexo obtido
+ **/
 Sexo GetSexo(){
     int val = GetInteiro("   Inform o sexo: \n   1 - Feminino.\n   2 - Masculino.\n   ");
     AddCursorPosition(0,-1);

@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <dirent.h>
 
+/**
+ * Responsável por instância o ponteiro de estrutura do tipo Paciente e preenchê-lo com dados obtidos da entrada do usuário através do console.
+ * @return ponteiro criado
+ **/
 Paciente* newPaciente(){
     Paciente* _paciente = (Paciente*)malloc(sizeof(Paciente));
     _paciente->Pessoa = newPessoa();
@@ -12,6 +16,11 @@ Paciente* newPaciente(){
     return _paciente;
 }
 
+/**
+ * Processo responsável por armazenar os dados do paciente em arquivo
+ * @param _paciente ponteiro para o paciente que terá os dados arquivados
+ * @return True quando processo é executado sem falha
+ **/
 bool ArmazenarPacienteEmArquivo(Paciente * _paciente){
     char dirName[50] = "";
     bool retorno = true;
@@ -32,6 +41,11 @@ bool ArmazenarPacienteEmArquivo(Paciente * _paciente){
    return retorno;
 }
 
+/**
+ * Responsável por obter os dados de um determinado paciente em arquivo e preencher em uma estrutura de dados.
+ * @param _paciente ponteiro para estrutura que irá receber os dados
+ * @param CPFPaciente CPF do paciente que se quer os dados
+ **/
 void GetPacienteEmArquivo(Paciente * _paciente, const char * CPFPaciente){
 
         char DirName[50] = "", arquivoPessoa[50] = "", arquivoComorbidade[50] = "";
@@ -51,6 +65,7 @@ void GetPacienteEmArquivo(Paciente * _paciente, const char * CPFPaciente){
 
 /**
 * Inicializa a lista com os Nós de Pacientes
+* @return ponteiro para a lista criada
 */
 ListaPaciente* criarListaPaciente(){
     ListaPaciente * lista = (ListaPaciente *) malloc(sizeof(ListaPaciente));
@@ -62,6 +77,8 @@ ListaPaciente* criarListaPaciente(){
 
 /**
  * Adiciona o paciente a lista informada
+ * @param lista ponteiro para a lista em que se quer adicionar o paciente
+ * @param _paciente ponteiro para o paciente que quer adicionar
  **/
 void AdicionarPaciente(ListaPaciente * lista, Paciente* _paciente){
     //Aloco memória para o nó de paciente
@@ -77,9 +94,10 @@ void AdicionarPaciente(ListaPaciente * lista, Paciente* _paciente){
     lista->tamanho++;
 }
 
-/*
- Imprime a lista de pacientes
- ****/
+/**
+ * Imprime a lista de pacientes
+ * @param lista ponteiro para a lista de pacientes a ser impressa
+ ***/
 void ImprimirListaPaciente(ListaPaciente * lista){
     LimparTela();
     if(ListaPacienteEstaVazia(lista)){
@@ -96,7 +114,9 @@ void ImprimirListaPaciente(ListaPaciente * lista){
 }
 
 /**
- *  Informa se há nós na Lista de Paciente
+ * Informa se há nós na Lista de Paciente
+ * @param lista ponteiro para a lista a ser verificada
+ * @return true quando há pelo menos 1 elemento na lista
  **/
 bool ListaPacienteEstaVazia(ListaPaciente * lista){
     return (lista->tamanho == 0);
@@ -104,6 +124,7 @@ bool ListaPacienteEstaVazia(ListaPaciente * lista){
 
 /**
  * Remove o Primeiro Nó da Lista de Paciente
+ * @param lista ponteiro para a lista do paciente a que terá seu primeiro nó removido
  **/
 void RemoverPrimeiroNoListaPaciente(ListaPaciente * lista){
     if(!ListaPacienteEstaVazia(lista)){
@@ -115,7 +136,9 @@ void RemoverPrimeiroNoListaPaciente(ListaPaciente * lista){
 }
 
 /**
- * Retorna o paciente contido na posicao informada da Lista.
+ * @param lista ponteiro para a lista de paciente a ser localizado o nó de acordo com a posição informada
+ * @param posicao posição/indice em que deva estar o nó esperado.
+ * @return Retorna o paciente contido na posicao informada da Lista.
  **/
 NoPaciente* NaPosicao(ListaPaciente * lista, int posicao){
 
@@ -131,7 +154,9 @@ NoPaciente* NaPosicao(ListaPaciente * lista, int posicao){
 }
 
 /**
- * Retorna a posição em que o paciente está na Lista. Será -1 quando não encontrar
+ * @param lista ponteiro para a lista de paciente a ser examinada
+ * @param _paciente ponteiro do paciente que se quer encontrar a posição na lista
+ * @return Retorna a posição em que o paciente está na Lista. Será -1 quando não encontrar
  **/
 int PosicaoNaLista(ListaPaciente * lista, Paciente * _paciente){
     if(_paciente != NULL){
@@ -155,6 +180,8 @@ int PosicaoNaLista(ListaPaciente * lista, Paciente * _paciente){
 
 /**
  * Remove o paciente da Lista na posição informada
+ * @param lista ponteiro da lista que terá o nó de paciente removido na posição determinada
+ * @param posicao posição/indice em que quer remover o nó
  **/
 void RemoverPacienteNaPosicao(ListaPaciente* lista, int posicao){
     if(posicao == 0)
@@ -173,6 +200,9 @@ void RemoverPacienteNaPosicao(ListaPaciente* lista, int posicao){
 
 /**
  * Adiciona o paciente a Lista na posição informada
+ * @param lista ponteiro para a lista que será adicionad o paciente
+ * @param _paciente ponteiro para o paciente que quer adicionar a lista
+ * @param posicao posição/indice em que se quer adicionar o paciente
  **/
 void AdicionarPacienteNaPosicao(ListaPaciente* lista, Paciente* _paciente, int posicao){
     if(posicao == 0)
@@ -194,6 +224,9 @@ void AdicionarPacienteNaPosicao(ListaPaciente* lista, Paciente* _paciente, int p
 
 /**
  * Muda os pacientes de posição.
+ * @param lista ponteiro da lista em que os pacientes serão trocados de posição
+ * @param pacienteA ponteiro para o primeiro paciente da troca
+ * @param pacienteB ponteiro apra o segundo paciente da troca
  **/
 void MudarPacientesNaLista(ListaPaciente * lista, Paciente* pacienteA, Paciente* pacienteB){
     //Se os pacientes forem iguais, não faço nada;
@@ -228,6 +261,11 @@ void MudarPacientesNaLista(ListaPaciente * lista, Paciente* pacienteA, Paciente*
         NoB->proximo = aux;
 }
 
+/**
+ * @param lista ponteiro para a lista a ser examinada
+ * @param posicaoInicial posição inicial da ordenação.
+ * @return Retorna ponteiro para o primeiro paciente da lista ordenada por nome em forma crescente a partir de determinada posição
+ **/
 NoPaciente* RetornaNoPacientePrimeiroAscendentePorNome(ListaPaciente * lista, int posicaoInicial){
     NoPaciente * ponteiro = NaPosicao(lista, posicaoInicial);
     if(ponteiro != NULL){
@@ -242,6 +280,11 @@ NoPaciente* RetornaNoPacientePrimeiroAscendentePorNome(ListaPaciente * lista, in
     return NULL;
 }
 
+/**
+ * @param lista ponteiro para a lista a ser examinada
+ * @param posicaoInicial posição inicial da ordenação.
+ * @return Retorna ponteiro para o último paciente da lista ordenada por nome em forma crescente a partir de determinada posição
+ **/
 NoPaciente* RetornaNoPacienteUltimoAscendentePorNome(ListaPaciente * lista, int posicaoInicial){
     NoPaciente * ponteiro = NaPosicao(lista, posicaoInicial);
     if(ponteiro != NULL){
@@ -256,6 +299,10 @@ NoPaciente* RetornaNoPacienteUltimoAscendentePorNome(ListaPaciente * lista, int 
     return NULL;
 }
 
+/**
+ * Ordena a lista informada por nome do paciente em ascendência
+ * @param lista ponteiro para a lista a ser ordenada
+ ***/
 void OrdenarListaPorNomeAscendente(ListaPaciente* lista){
     int i;
     for(i = 0; i < lista->tamanho - 1; i++){
@@ -263,6 +310,10 @@ void OrdenarListaPorNomeAscendente(ListaPaciente* lista){
     }
 }
 
+/**
+ * Ordena a lista informada por nome do paciente em decrescência
+ * @param lista ponteiro para a lista a ser ordenada
+ ***/
 void OrdenarListaPorNomeDescrescente(ListaPaciente* lista){
     int i;
     for(i = 0; i < lista->tamanho - 1; i++){
@@ -270,6 +321,10 @@ void OrdenarListaPorNomeDescrescente(ListaPaciente* lista){
     }
 }
 
+/**
+ * Responsável por carregar todos os pacientes armazenados em arquivo
+ * @return ponteiro para lista de pacientes cadastrados
+ ***/
 ListaPaciente* CarregarPacientesCadastrados(){
     ListaPaciente* lista = criarListaPaciente();
 
@@ -296,6 +351,8 @@ ListaPaciente* CarregarPacientesCadastrados(){
 /**
  * Determina se o paciente faz parte do grupo de risco
  * Fonte: http://www.oncoguia.org.br/conteudo/grupos-de-risco/13468/1204/
+ * @param paciente ponteiro para o paciente a ser examinado
+ * @return true quando o paciente examinado possuir pelo menos 1 dos parâmetros de risco
  */
 bool PacienteFazParteGrupoRisco(Paciente* paciente){
     return paciente->Comorbidade.IMC >= 40 ||
@@ -314,6 +371,10 @@ bool PacienteFazParteGrupoRisco(Paciente* paciente){
            paciente->Comorbidade.Tuberculoso;
 }
 
+/**
+ * Realiza o armazenamento de dados em arquivo para ser enviar à Secretaria da Saúde Municipal
+ * @param paciente ponteiro para o paciente que será incluso ao grupo de risco
+ ***/
 void AdicionarPacienteAGrupoRisco(Paciente* paciente){
     String diretorio = criarString(90);
     strcat(diretorio, DEFAULT_DIR);
