@@ -1,6 +1,10 @@
 #include "Comorbidade.h"
 #include <dirent.h>
-
+/**
+ * Responsável por criar uma nova estrutura de dados do tipo Comorbidade com os dados informados pelo usuário em tela.
+ * @param imc Indice de Massa Muscular do paciente
+ * @param sexo sexo do(a) paciente
+ ***/
 Comorbidade newComorbidade(int imc, Sexo sexo){
     Comorbidade _comorbidade;
     char texto[255];
@@ -56,7 +60,11 @@ Comorbidade newComorbidade(int imc, Sexo sexo){
 }
 
 /**
-* Usage: Armazena a comorbidade me um arquivo no diretório informado com o nome especificado.
+* Usage: Armazena a comorbidade em um arquivo no diretório informado com o nome especificado.
+* @param _comorbidade ponteiro para a comorbidade a ser armazenada
+* @param nomeArquivo ponteiro para o nome do arquivo que irá armazenar a comorbidade
+* @param diretorio ponteiro para o caminho do diretório onde o arquivo será gravado.
+* @return true quando a gravação em arquivo ocorre com sucesso.
 */
 bool ArmazernarComorbidadeEmArquivo(Comorbidade * _comorbidade, char * nomeArquivo, char * diretorio){
     FILE *arquivo;
@@ -78,6 +86,11 @@ bool ArmazernarComorbidadeEmArquivo(Comorbidade * _comorbidade, char * nomeArqui
     return retorno;
 }
 
+/**
+ * Responsável por popular os dados do arquivo em uma estrutura de dados do tipo Comorbidade
+ * @param nomeArquivo ponteiro para o nome completo do arquivo
+ * @return Estrutura Comorbidade com os dados do arquivo
+ **/
 Comorbidade RetornaComorbidadeEmArquivo(char * nomeArquivo){
 
     FILE * fptr;
@@ -91,6 +104,10 @@ Comorbidade RetornaComorbidadeEmArquivo(char * nomeArquivo){
     return comor;
 }
 
+/**
+ * Responsável por imprimir em tela, os dados da comorbidade
+ * @param comor ponteiro para a comorbidade a ser impressa
+ **/
 void ImprimeComorbidade(Comorbidade* comor){
     String textoImpressao = criarString(255), textoAuxiliar = criarString(150);
 
@@ -138,13 +155,14 @@ void ImprimeComorbidade(Comorbidade* comor){
        !comor->RelizouAlgumTransplante &&
        !comor->FazDialise &&
        !comor->HIV
-       ){
+       ){ //Já que não possui nenhuma comorbidade, informo
         textoAuxiliar[0] = EMPTYCHAR;
         textoImpressao[0] = EMPTYCHAR;
         sprintf(textoAuxiliar, "  N%co possui comorbidades.", a_TILDE);
         PadRight(' ', textoImpressao, textoAuxiliar, 82);
         printf(" |%s|\n", textoImpressao);
     }else{
+        //Imprimo cada comorbidade se existente
 
         if(comor->AsmaOuDoencaPulmonar){
             textoAuxiliar[0] = EMPTYCHAR;

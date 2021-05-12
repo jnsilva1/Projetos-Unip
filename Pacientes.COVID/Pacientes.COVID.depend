@@ -71,11 +71,11 @@
 	<Comorbidade.h>
 	<dirent.h>
 
-1620688616 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.c
+1620783130 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\comorbidade.c
 	"Comorbidade.h"
 	<dirent.h>
 
-1620586101 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
+1620783899 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
 	"DataHora.h"
 
 1620264843 c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.h
@@ -85,7 +85,7 @@
 	<time.h>
 	"OutrosTipos.h"
 
-1620594009 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.c
+1620783203 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.c
 	"Endereco.h"
 
 1616463018 c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.h
@@ -120,7 +120,7 @@
 	"Endereco.h"
 	"DataHora.h"
 
-1620686356 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
+1620776415 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
 	<stdio.h>
 	<stdlib.h>
 	<malloc.h>
@@ -139,26 +139,26 @@
 	"Pessoa.h"
 	<dirent.h>
 
-1620773966 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
+1620780464 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
 	"OutrosTipos.h"
 
-1620699495 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
+1620784490 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
 	<stdio.h>
 	<stdlib.h>
 	"OutrosTipos.h"
 
-1620774121 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
+1620782522 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
 	"Usuario.h"
 
-1620686548 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
+1620784514 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
 
-1620772726 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
+1620784523 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
 	<dirent.h>
+	"Usuario.h"
 	"Modulos.h"
 	"Paciente.h"
 	"OutrosTipos.h"
-	"Usuario.h"
 

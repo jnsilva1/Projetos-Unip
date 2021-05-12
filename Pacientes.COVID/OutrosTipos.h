@@ -5,7 +5,7 @@
 #include <conio.h>
 #include <windows.h>
 #ifndef DEFAULT_DIR
-#define DEFAULT_DIR "C:/LUNICARE.COVID/"
+#define DEFAULT_DIR "C:/UNIPCARE.COVID/"
 #endif // DEFAULT_DIR
 #ifndef OUTROSTIPOS_H
 #ifndef ENTER_CHAR

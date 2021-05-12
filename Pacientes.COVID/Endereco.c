@@ -1,5 +1,9 @@
 #include "Endereco.h"
 
+/**
+ * Responsável por criar uma nova estrutura de dados do tipo Endereço com as informações obtidas da entrada do usuário no console.
+ * @return a estrutura Endereço preenchida e validada
+ ***/
 Endereco newEndereco(){
     Endereco novoEndereco;
     sprintf(novoEndereco.Complemento, "%s", "   \0");

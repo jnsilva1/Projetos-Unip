@@ -1,11 +1,21 @@
 #include "Usuario.h"
 
+/**
+ * Responsável por montar o caminho/nome completo do arquivo que armazena os usuário que possuem acesso ao sistema
+ * @param _destino ponteiro para a cadeia de caracteres que receberá o nome completo do arquivo
+ **/
 void ObtemNomeCompletoArquivoDeUsuarios(char * _destino){
     _destino[0] = EMPTYCHAR;
     strcat(_destino, DEFAULT_DIR);
     strcat(_destino, "usuarios.unip");
 }
 
+/**
+ * Responsável por validade os dados de acesso ao sistema
+ * @param login Login do usuário
+ * @param senha Senha do usuário
+ * @return ponteiro para o usuário de acordo com os dados informados
+ **/
 Usuario* AcessarSistema(char * login, char * senha){
     AdicionarUsuarioPadrao();
     Usuario* usuario = (Usuario *)malloc(sizeof(Usuario));
@@ -31,7 +41,12 @@ Usuario* AcessarSistema(char * login, char * senha){
     return usuario;
 }
 
-
+/**
+ * Responsável por obter a senha da entrada do usuário no console
+ * @param _dest ponteiro para a cadeia de caracteres que irá receber a senha
+ * @param login determina se o momento a ser exigida a senha será para realizar login
+ * @param descricao Descrição auxiliar
+ **/
 void ObtemSenha(char * _dest, bool login, String descricao){
     const int maxPasswordLength = 15;
     char password[maxPasswordLength+1],ch;
@@ -76,6 +91,9 @@ void ObtemSenha(char * _dest, bool login, String descricao){
     }
 }
 
+/**
+ * Responsável por verificar a quantidade total de usuários cadastrados.
+ **/
 int TotalUsuariosCadastrados(){
     FILE * fptr;
     char diretorioUsuarios[50];
@@ -92,6 +110,9 @@ int TotalUsuariosCadastrados(){
     return (int)numeroRegistros;
 }
 
+/**
+ * Responsável por adicionar o usuário administrador
+ **/
 void AdicionarUsuarioPadrao(){
     if(TotalUsuariosCadastrados() == 0){
         Usuario user;
@@ -118,6 +139,12 @@ void AdicionarUsuarioPadrao(){
     }
 }
 
+/**
+ * Responsável por buscar o usuário em arquvo por seu id
+ * @param usuarioDestino ponteiro para armazenar o usuário encontrado
+ * @param Id id do usuário que se deseja encontrar
+ * @return ponteiro para resultado de busca em arquivo
+ ***/
 ResultadoBuscaEmArquivo* BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
 
     FILE * fptr;
@@ -142,6 +169,9 @@ ResultadoBuscaEmArquivo* BuscaUsuarioPeloId(Usuario * usuarioDestino, int Id){
     return res;
 }
 
+/**
+ * Retorna a próxima sequência para o usuário
+ **/
 int ProximaSequenciaUsuario(){
     Usuario us;
     FILE * fptr;
@@ -166,6 +196,10 @@ int ProximaSequenciaUsuario(){
     return sequencia;
 }
 
+/**
+ * Preenche a lista com os usuários cadastrados
+ * @param lista ponteiro da lista que irá armazenar em memória os usuários cadastrados
+ ***/
 void RetornaTodosUsuariosCadastrados(ListaUsuario* lista){
     int indiceAtual = 0;
     FILE * fptr;
@@ -189,6 +223,10 @@ void RetornaTodosUsuariosCadastrados(ListaUsuario* lista){
     free(usr);
 }
 
+/**
+ * Responsável por determinar se já foi cadastrado um usuário com o login informado
+ * @param login ponteiro para cadeia de caracteres que contém o login a ser verificado
+ **/
 bool ExisteUsuarioComLogin(char * login){
     bool resposta = false;
     ListaUsuario* lista = criarListaUsuario();
@@ -208,6 +246,12 @@ bool ExisteUsuarioComLogin(char * login){
     return resposta;
 }
 
+/**
+ * Responsável por executar o armazenamento do usuário em arquivo e as devidas validações
+ * @param usr ponteiro para o usuário a ser armazenado
+ * @param atualizacao determina se devo ignora a validação de duplicidade de login
+ * @return true quando armazenou sem problemas o usuário
+ **/
 bool GravarUsuario(Usuario* usr, bool atualizacao){
     if(ExisteUsuarioComLogin(usr->Login) && !atualizacao){
         printf("\n\n  J%c existe usu%crio cadastrado com o login informado.\n",160,160);
@@ -219,6 +263,9 @@ bool GravarUsuario(Usuario* usr, bool atualizacao){
     return true;
 }
 
+/**
+ * Processo a ser acionado pelo usuário na tela principal
+ **/
 void CadastrarUsuario(){
     bool gravou = false;
     do{
@@ -233,6 +280,9 @@ void CadastrarUsuario(){
     }
 }
 
+/**
+ * Processo responsável por imprimir todos os usuários cadastrados
+ **/
 void ImprimirTodosUsuarios(){
     ListaUsuario* lista = criarListaUsuario();
     RetornaTodosUsuariosCadastrados(lista);
@@ -240,6 +290,12 @@ void ImprimirTodosUsuarios(){
     free(lista);
 }
 
+/**
+ * Responsável por determinar a posição na lista, do usuário informado.
+ * @param lista ponteiro para a lista de usuários
+ * @param usr usuário que se deseja saber a posição na lista
+ * @return a posição, será -1 quando não encontrado
+ **/
 int RetornaPosicaoUsuario(ListaUsuario* lista, Usuario* usr){
     int pos = 0;
     NoUsuario* no = lista->inicio;
@@ -252,6 +308,11 @@ int RetornaPosicaoUsuario(ListaUsuario* lista, Usuario* usr){
     return -1;
 }
 
+/**
+ * Retorna o Nó de usuário da lista na posição informada.
+ * @param lista ponteiro para a lista de usuários
+ * @param posição em que está o nó desejado.
+ **/
 NoUsuario* RetornaNoUsuarioNaPosicao(ListaUsuario* lista, int posicao){
     if(posicao < 0 || posicao > lista->tamanho) return NULL;
     NoUsuario* no = lista->inicio;
@@ -266,6 +327,10 @@ NoUsuario* RetornaNoUsuarioNaPosicao(ListaUsuario* lista, int posicao){
     return NULL;
 }
 
+/**
+ * Responsável por gravar o usuário no arquivo
+ * @param usr usuário que se deseja armazenar
+ **/
 void AdicionarUsuario(Usuario* usr){
     int totalUsuarios = TotalUsuariosCadastrados(), pos = 0;
     ListaUsuario* lista = criarListaUsuario();
@@ -299,6 +364,10 @@ void AdicionarUsuario(Usuario* usr){
     free(lista);
 }
 
+/**
+ * Responsável por obter da entrada do console, os dados do novo usuário
+ * @return ponteiro para o novo usuário obtido
+ **/
 Usuario* ObterNovoUsuario(){
     fflush(stdin);
     system("cls");
@@ -316,6 +385,10 @@ Usuario* ObterNovoUsuario(){
     return usuario;
 }
 
+/**
+ * Imprime os dados do usuário informado em tela
+ * @param usr ponteiro para o usuário que se quer imprimir
+ **/
 void ImprimeUsuario(Usuario* usr){
     printf("\n      Id: %d", usr->Id);
     printf("\n    Nome: %s", usr->Nome);
@@ -323,6 +396,10 @@ void ImprimeUsuario(Usuario* usr){
     printf("%c", NEWLINE);
 }
 
+/**
+ * Executa as impressão em tela dos dados dos usuários contidos na lista informada
+ * @param lista lista de usuários a serem impresso os dados
+ **/
 void ImprimeUsuarios(ListaUsuario* lista){
     system("cls");
     printf(" |==================================================================================|\n");
@@ -337,6 +414,10 @@ void ImprimeUsuarios(ListaUsuario* lista){
     printf("\n\n");
 }
 
+/**
+ * Responsável por criar o ponteiro para a lista de usuário
+ * @return ponteiro criado
+ **/
 ListaUsuario* criarListaUsuario(){
     ListaUsuario* lista = (ListaUsuario*)malloc(sizeof(ListaUsuario));
     lista->inicio = NULL;
@@ -344,7 +425,10 @@ ListaUsuario* criarListaUsuario(){
     return lista;
 }
 
-
+/**
+ * Responsável por criar o ponteiro para nó de usuário
+ * @return ponteiro criado
+ **/
 NoUsuario* criarNoUsuario(){
     NoUsuario* no = (NoUsuario*)malloc(sizeof(NoUsuario));
     no->atual = NULL;
@@ -352,6 +436,10 @@ NoUsuario* criarNoUsuario(){
     return no;
 }
 
+/**
+ * Responsável por criar o ponteiro para usuário
+ * @return ponteiro criado
+ **/
 Usuario* criarUsuario(){
     Usuario* usuario = (Usuario*)malloc(sizeof(Usuario));
     usuario->Id = 0;

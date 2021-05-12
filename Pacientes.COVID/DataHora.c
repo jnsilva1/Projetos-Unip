@@ -1,6 +1,9 @@
 #include "DataHora.h"
 
-///Instancia a data e hora atual
+/**
+ * Responsável por Instanciar a data e hora atual
+ * @return ponteiro para estrutuda de dados do tipo DataHora que contém as informações atuais
+ **/
 DataHora* Agora(){
     time_t tempo;
     tempo = time(NULL);
@@ -18,7 +21,12 @@ DataHora* Agora(){
     return _dataHora;
 }
 
-/// Converte a  Data e Hora em uma String de acordo com o formato informado: ["dd/mm/aaaa hh:mm:ss", "dd/mm/aaaa hh:mm", "dd/mm/aaaa", "hh:mm:ss"]
+/**
+ * Converte a  Data e Hora em uma String de acordo com o formato informado
+ * @param dataHoraString ponteiro para a cadeia de caracteres que receberá a data e hora formatada
+ * @param _dt ponteiro para a estrutura do tipo data e hora que se quer formatar
+ * @param formato formato em que se quer a data/hora: ["dd/mm/aaaa hh:mm:ss", "dd/mm/aaaa hh:mm", "dd/mm/aaaa", "hh:mm:ss"]
+ ***/
 void DataHoraToString(char * dataHoraString, DataHora* _dt,const char * formato){
 
         if(strcmp("dd/mm/aaaa hh:mm:ss", formato) == 0){
@@ -36,7 +44,11 @@ void DataHoraToString(char * dataHoraString, DataHora* _dt,const char * formato)
         }
 }
 
-///Retorna a data formadata para string
+/**
+ * Responsável por formatar a data informada em um a string
+ * @param destino ponteiro para a cadeia de caracteres que irá receber a data formatada
+ * @param _dt ponteiro para a estrutura do tipo Data a ser formatada
+ **/
 void DataToString(char* destino, Data* _dt){
     DataHora _dts;
     _dts.Data = *_dt;
@@ -44,7 +56,11 @@ void DataToString(char* destino, Data* _dt){
     DataHoraToString(destino,&_dts, S_DATAHORA_FORMATO_DATA);
 }
 
-///Retorna a hora formadata para string
+/**
+ * Responsável por formatar a hora informada em uma string
+ * @param destino ponteiro para a cadeia de caracteres que irá receber a hora formatada
+ * @param _hora ponteiro para a estrutura do tipo Hora a ser formatada
+ **/
 void HoraToString(char * destino, Horario* _hora){
     DataHora _dts;
     _dts.Hora = *_hora;
@@ -112,6 +128,13 @@ int RetornaQuantidadeDiasNoMes(int mes, int ano){
     }
 }
 
+/**
+ * Responsável por instanciar uma nova estrutura do tipo Data
+ * @param dia Dia
+ * @param mes Mês
+ * @param ano Ano
+ * @return Estrutura Data com os valores informados
+ **/
 Data NewData(int dia, int mes, int ano){
     Data _data;
     _data.Ano = ano;
@@ -119,6 +142,14 @@ Data NewData(int dia, int mes, int ano){
     _data.Dia = dia;
     return _data;
 }
+
+/**
+ * Responsável por instanciar uma nova estrutura do tipo Horario
+ * @param hora Hora
+ * @param minuto Minuto
+ * @param segundo Segundo
+ * @return Estrutura Horario com os valores informados
+ ***/
 Horario NewHorario(int hora, int minuto, int segundo){
     Horario _horario;
     _horario.Hora = hora;
@@ -126,6 +157,17 @@ Horario NewHorario(int hora, int minuto, int segundo){
     _horario.Segundo = segundo;
     return _horario;
 }
+
+/**
+ * Responsável por instanciar uma nova estrutura do tipo DataHora
+ * @param dia Dia
+ * @param mes Mês
+ * @param ano Ano
+ * @param hora Hora
+ * @param minuto Minuto
+ * @param segundo Segundo
+ * @return Estrutura DataHora com os valores informados
+ ***/
 DataHora NewDataHora(int dia, int mes, int ano, int hora, int minuto, int segundo){
     DataHora _dataHora;
     _dataHora.Data = NewData(dia, mes, ano);
@@ -133,6 +175,9 @@ DataHora NewDataHora(int dia, int mes, int ano, int hora, int minuto, int segund
     return _dataHora;
 }
 
+/**
+ * Determina se a data informada possui valores válidos para o tipo
+ **/
 bool EhUmaDataValida(Data _data){
     bool res = true;
     int UltimoDiaMes = RetornaQuantidadeDiasNoMes(_data.Mes, _data.Ano);
@@ -142,6 +187,9 @@ bool EhUmaDataValida(Data _data){
     return res;
 }
 
+/**
+ * Determina se o horário informado possui valores válidos para o tipo
+ ***/
 bool EhUmHorarioValido(Horario _horario){
     bool res = true;
     res = res && _horario.Segundo >= 0 && _horario.Segundo <= 59;
@@ -150,6 +198,11 @@ bool EhUmHorarioValido(Horario _horario){
     return res;
 }
 
+/**
+ * Responsável por obter uma estrutura de data através da entrada do usuário no console
+ * @param mensagem mensagem a ser apresentada para o usuário afim de auxiliá-lo no preenchimento da informação desejada
+ * @return estrutura Data com os dados obtidos
+ **/
 Data GetData(const char * mensagem){
     bool primeiroLooping = true, valido = false;
     Data _dt;

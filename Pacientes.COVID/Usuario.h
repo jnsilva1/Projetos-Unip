@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "OutrosTipos.h"
-#ifndef USUARIO_H
-#define USUARIO_H
+
+#ifndef USUARIO_HH
+#define USUARIO_HH
 typedef struct usuario {
     int Id;
     char Login[30];
@@ -20,11 +21,7 @@ typedef struct listaUsuario{
     NoUsuario* inicio;
     int tamanho;
 }ListaUsuario;
-/*
-bool AdicionarUsuario(Usuario * _usuario);
-bool RemoverUsuario(Usuario * _usuario);
-bool EncontrarUsuario(Usuario * _usuario, char * loginName, char * senha);
-*/
+
 void ObtemNomeCompletoArquivoDeUsuarios(char * _destino);
 Usuario* AcessarSistema(char * login, char * senha);
 void ObtemSenha(char * _dest, bool login, String descricao);
@@ -45,4 +42,4 @@ int RetornaPosicaoUsuario(ListaUsuario* lista, Usuario* usr);
 ListaUsuario* criarListaUsuario();
 NoUsuario* criarNoUsuario();
 Usuario* criarUsuario();
-#endif // USUARIO_H
+#endif // USUARIO_HH
