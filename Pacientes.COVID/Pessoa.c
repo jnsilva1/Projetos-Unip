@@ -183,19 +183,22 @@ Pessoa newPessoa(void) {
     Pessoa p;
 
     printf(" |==================================================================================|\n");
-    printf(" |                               CADASTRO DE PESSOA                                 |\n");
+    printf(" |                              CADASTRO DE PACIENTE                                |\n");
     printf(" |==================================================================================|\n");
 
     AddCursorPosition(0,1);
-    GetStringLetrasApenas("   Informe o nome (sem acentos): ", p.Nome, 49);
+    GetStringLetrasApenas("   Informe o nome (sem acentos): ", p.Nome, 49, true);
 
     AddCursorPosition(0,-1);
     sprintf(p.CPF, "%lld", GetLongLong("   Informe o CPF (numeros apenas): "));
 
     AddCursorPosition(0, -1);
+    COORD* position = GetCursorPosition();
     p.DataNascimento = GetData("   Informe a data de nascimento \'dd/mm/aaaa\': ");
+    AddCursorPosition(0, -1);//Limpa linha atual
+    COORD* position2 = GetCursorPosition();
 
-    AddCursorPosition(0, -1);
+    AddCursorPosition(position->X - position2->X, position->Y - position2->Y);
     p.Sexo = GetSexo();
 
     AddCursorPosition(0, -1);

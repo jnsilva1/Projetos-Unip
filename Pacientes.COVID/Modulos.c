@@ -46,10 +46,10 @@ Usuario* RealizarLogin(){
         do{ //Enquanto o login for vazio, solicito a informação ao usuário
 
             AddCursorPosition(0, -1);
-            GetString("\n   Informe o login: ", login, 49);
+            GetString("\n   Informe o login: ", login, 49, false);
             if(strlen(login) == 0) {
                 AddCursorPosition(0, -1);
-                GetString("   Nenhum login informado.", senha, 29);
+                GetString("   Nenhum login informado.", senha, 29, false);
                 AddCursorPosition(0, -1);
             }
         }while(strlen(login) == 0);
@@ -66,7 +66,7 @@ Usuario* RealizarLogin(){
         user = AcessarSistema(login, senha);
         if(user == NULL){ //Se usuário não foi encontrado, apresento mensagem
             sprintf(texto, "   Usu%crio e/ou senha incorretos. (Pressione qualquer tecla para continuar. . .)", a_AGUDO);
-            GetString(texto, login, 2);
+            GetString(texto, login, 2, false);
             AddCursorPosition(0,-1);
             AddCursorPosition(0,-1);
             AddCursorPosition(0,-1);

@@ -53,7 +53,9 @@ void LimparTela(){
 COORD* GetCursorPosition(){
     CONSOLE_SCREEN_BUFFER_INFO cbsi;
     GetConsoleScreenBufferInfo(GetStdHandle( STD_OUTPUT_HANDLE), &cbsi);
-    COORD* POS = &cbsi.dwCursorPosition;
+     COORD* POS = (COORD*)malloc(sizeof(COORD));
+     POS->X = cbsi.dwCursorPosition.X;
+     POS->Y = cbsi.dwCursorPosition.Y;
     return POS;
 }
 
@@ -427,29 +429,44 @@ long long ConverteParaLongoLongo(char * valor){
   * Obtém uma string da entrada do usuário
   * @param descricao Texto a ser exibido para usuário, auxiliando-o a entender o que se pede.
   * @param destino Buffer/Ponteiro de destino da string obtida da entrada
+  * @param maxLength quantidade de caracteres suportados
+  * @param obrigatorio quando obrigatório, exige o preenchimento
   */
-void GetString(const char * descricao, char * destino, int maxLength){
+void GetString(const char * descricao, char * destino, int maxLength, bool obrigatorio){
     if(maxLength <= 0) maxLength = (sizeof(*destino)/sizeof(destino[0]));
-    fflush(stdin);
-    printf("%s", descricao);
-    int input, len = -1;
-    while((input = getchar()) != EOF && len <= maxLength){
-        len++;
-        if(input == NEWLINE)
-            break;
+    bool primeiraIteracao = true;
+    do{
+        if(!primeiraIteracao){
+            AddCursorPosition(0,-1);
+            printf("   Campo Obrigat%crio!\n", o_AGUDO);
+            getch();
+            AddCursorPosition(0,-1);
+        }
+        fflush(stdin);
+        printf("%s", descricao);
+        int input, len = -1;
 
-        destino[len] = (char)input;
-    }
-    //scanf("%[^\n]s", destino);
-    destino[len] = '\0';
+        while((input = getchar()) != EOF && len <= maxLength){
+            len++;
+            if(input == NEWLINE)
+                break;
+
+            destino[len] = (char)input;
+        }
+        //scanf("%[^\n]s", destino);
+        destino[len] = '\0';
+        primeiraIteracao = false;
+    }while(obrigatorio && strlen(destino) <= 1);
 
 }
 /**
   * Obtém uma string da entrada do usuário e realiza a validação se contém apenas letras válidas
   * @param descricao Texto a ser exibido para usuário, auxiliando-o a entender o que se pede.
   * @param destino Buffer/Ponteiro de destino da string obtida da entrada
+  * @param maxLength quantidade de caracteres suportados
+  * @param obrigatorio quando obrigatório, exige o preenchimento
   */
-void GetStringLetrasApenas(const char * descricao, char * destino, int maxLength){
+void GetStringLetrasApenas(const char * descricao, char * destino, int maxLength, bool obrigatorio){
     bool primeiroLooping = true, valido = false;
     do{
         if(!primeiroLooping){
@@ -459,7 +476,7 @@ void GetStringLetrasApenas(const char * descricao, char * destino, int maxLength
             AddCursorPosition(0,-1);
         }
 
-        GetString(descricao, destino, maxLength);
+        GetString(descricao, destino, maxLength, obrigatorio);
         valido = ContemApenasLetras(destino);
         primeiroLooping = false;
     }while(!valido);
@@ -480,7 +497,7 @@ long GetLong(const char * descricao){
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, stringLong, 15);
+        GetString(descricao, stringLong, 15, true);
         ReplaceChar(stringLong, '-', EMPTYCHAR);
         ReplaceChar(stringLong, '.', EMPTYCHAR);
         ReplaceChar(stringLong, ',', EMPTYCHAR);
@@ -505,7 +522,7 @@ int GetInteiro(const char * descricao){
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, stringInteiro, 5);
+        GetString(descricao, stringInteiro, 5, false);
         ReplaceChar(stringInteiro, '-', EMPTYCHAR);
         ReplaceChar(stringInteiro, '.', EMPTYCHAR);
         ReplaceChar(stringInteiro, ',', EMPTYCHAR);
@@ -530,7 +547,7 @@ long long GetLongLong(const char * descricao){
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, stringLong, 15);
+        GetString(descricao, stringLong, 15, true);
         ReplaceChar(stringLong, '-', EMPTYCHAR);
         ReplaceChar(stringLong, '.', EMPTYCHAR);
         valido = ContemApenasNumero(stringLong);
@@ -620,7 +637,7 @@ void GetEmail(const char * descricao, char * destino){
             AddCursorPosition(0,-1);
         }
 
-        GetString(descricao, destino, 59);
+        GetString(descricao, destino, 59, false);
         valido = EhEmail(destino);
 
         primeiroLooping = false;
@@ -661,7 +678,7 @@ double GetDouble(const char * descricao, double* min, double* max){
             getch();
             AddCursorPosition(0,-1);
         }
-        GetString(descricao, sDouble, 16);
+        GetString(descricao, sDouble, 16, true);
         ReplaceChar(sDouble, ',', '.');
         Substring(parteInteira, sDouble, 0, StringPrimeiraPosicao(sDouble, '.'));
         if(StringPrimeiraPosicao(sDouble, '.') >= 0)

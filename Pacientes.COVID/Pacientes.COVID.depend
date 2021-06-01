@@ -75,7 +75,7 @@
 	"Comorbidade.h"
 	<dirent.h>
 
-1620783899 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
+1622507218 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.c
 	"DataHora.h"
 
 1620264843 c:\users\josen\source\repos\projetos-unip\pacientes.covid\datahora.h
@@ -85,8 +85,9 @@
 	<time.h>
 	"OutrosTipos.h"
 
-1620783203 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.c
+1622506029 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.c
 	"Endereco.h"
+	"OutrosTipos.h"
 
 1616463018 c:\users\josen\source\repos\projetos-unip\pacientes.covid\endereco.h
 	<stdio.h>
@@ -99,7 +100,7 @@
 	<stdfix.h>
 	"Modulos.h"
 
-1620688375 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
+1620859252 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\paciente.c
 	"Paciente.h"
 	<stdlib.h>
 	<stdio.h>
@@ -120,7 +121,7 @@
 	"Endereco.h"
 	"DataHora.h"
 
-1620776415 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
+1622505369 c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.h
 	<stdio.h>
 	<stdlib.h>
 	<malloc.h>
@@ -135,11 +136,11 @@
 	"DataHora.h"
 	"Pessoa.h"
 
-1620594714 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.c
+1622507890 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\pessoa.c
 	"Pessoa.h"
 	<dirent.h>
 
-1620780464 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
+1622507487 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\outrostipos.c
 	"OutrosTipos.h"
 
 1620784490 c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.h
@@ -147,12 +148,12 @@
 	<stdlib.h>
 	"OutrosTipos.h"
 
-1620782522 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
+1622506064 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\usuario.c
 	"Usuario.h"
 
 1620784514 c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.h
 
-1620784523 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
+1622505755 source:c:\users\josen\source\repos\projetos-unip\pacientes.covid\modulos.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
