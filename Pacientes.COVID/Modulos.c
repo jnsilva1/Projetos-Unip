@@ -120,7 +120,7 @@ void AlterarSenha(){
     bool primeiraIteracao = true;
     do{
         if(!primeiraIteracao){
-            printf("   Senha inv%clida!\n", a_AGUDO);
+            printf("   Senhas n%co coincidem!\n", a_TILDE);
             getch();
             AddCursorPosition(0,-1);
             AddCursorPosition(0,-1);

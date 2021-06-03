@@ -682,7 +682,7 @@ double GetDouble(const char * descricao, double* min, double* max){
         ReplaceChar(sDouble, ',', '.');
         Substring(parteInteira, sDouble, 0, StringPrimeiraPosicao(sDouble, '.'));
         if(StringPrimeiraPosicao(sDouble, '.') >= 0)
-            Substring(parteDecimal, sDouble, StringPrimeiraPosicao(sDouble, '.') + 1, 4);
+            Substring(parteDecimal, sDouble, StringPrimeiraPosicao(sDouble, '.') + 1, 3);
         valido = ContemApenasNumero(parteInteira) && (ContemApenasNumero(parteDecimal) || StringPrimeiraPosicao(sDouble, '.') == -1);
         primeiroLooping = false;
     }while(!valido);

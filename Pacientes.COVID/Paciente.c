@@ -356,7 +356,7 @@ ListaPaciente* CarregarPacientesCadastrados(){
  */
 bool PacienteFazParteGrupoRisco(Paciente* paciente){
     return paciente->Comorbidade.IMC >= 40 ||
-           CalcularIdade(&paciente->Pessoa.DataNascimento) > 65 ||
+           CalcularIdade(&paciente->Pessoa.DataNascimento) >= 65 ||
            paciente->Comorbidade.AsmaOuDoencaPulmonar ||
            paciente->Comorbidade.Diabetico ||
            paciente->Comorbidade.DoencaNoFigado ||
